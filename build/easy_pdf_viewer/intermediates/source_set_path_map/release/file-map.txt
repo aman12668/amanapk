@@ -1,0 +1,12 @@
+dev.kaichi.easy_pdf_viewer-core-1.6.0-0 C:\Users\pragya\.gradle\caches\transforms-3\1141b72fb8be4e566e7814849b1aa3a2\transformed\core-1.6.0\res
+dev.kaichi.easy_pdf_viewer-jetified-window-1.0.0-beta04-1 C:\Users\pragya\.gradle\caches\transforms-3\40ff8c014bc3b03149787e1d45a42dea\transformed\jetified-window-1.0.0-beta04\res
+dev.kaichi.easy_pdf_viewer-jetified-annotation-experimental-1.1.0-2 C:\Users\pragya\.gradle\caches\transforms-3\a6362f1fb79a6245a27920bb99ff99c3\transformed\jetified-annotation-experimental-1.1.0\res
+dev.kaichi.easy_pdf_viewer-jetified-window-java-1.0.0-beta04-3 C:\Users\pragya\.gradle\caches\transforms-3\ed438543a8e9ffa856a2b095c92f0ea3\transformed\jetified-window-java-1.0.0-beta04\res
+dev.kaichi.easy_pdf_viewer-main-4 C:\Users\pragya\AppData\Local\Pub\Cache\hosted\pub.dev\easy_pdf_viewer-1.0.7\android\src\main\res
+dev.kaichi.easy_pdf_viewer-release-5 C:\Users\pragya\AppData\Local\Pub\Cache\hosted\pub.dev\easy_pdf_viewer-1.0.7\android\src\release\res
+dev.kaichi.easy_pdf_viewer-pngs-6 C:\Users\pragya\Downloads\neb12notes-main (4)\neb12notes-main\build\easy_pdf_viewer\generated\res\pngs\release
+dev.kaichi.easy_pdf_viewer-resValues-7 C:\Users\pragya\Downloads\neb12notes-main (4)\neb12notes-main\build\easy_pdf_viewer\generated\res\resValues\release
+dev.kaichi.easy_pdf_viewer-rs-8 C:\Users\pragya\Downloads\neb12notes-main (4)\neb12notes-main\build\easy_pdf_viewer\generated\res\rs\release
+dev.kaichi.easy_pdf_viewer-mergeReleaseResources-9 C:\Users\pragya\Downloads\neb12notes-main (4)\neb12notes-main\build\easy_pdf_viewer\intermediates\incremental\release\mergeReleaseResources\merged.dir
+dev.kaichi.easy_pdf_viewer-mergeReleaseResources-10 C:\Users\pragya\Downloads\neb12notes-main (4)\neb12notes-main\build\easy_pdf_viewer\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+dev.kaichi.easy_pdf_viewer-merged_res-11 C:\Users\pragya\Downloads\neb12notes-main (4)\neb12notes-main\build\easy_pdf_viewer\intermediates\merged_res\release
