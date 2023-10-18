@@ -1,4 +1,0 @@
-#Sat Oct 14 20:43:26 NPT 2023
-base.0=C\:\\Users\\pragya\\Downloads\\neb12notes-main (4)\\neb12notes-main\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
-path.0=classes.dex
-renamed.0=classes.dex

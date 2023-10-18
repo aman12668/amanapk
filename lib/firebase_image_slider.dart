@@ -45,12 +45,16 @@ class _ImageSliderFirebaseState extends State<ImageSliderFirebase> {
                             snapshot.data!.docs[index];
                         return Image.network(
                           sliderImage['img'],
-                          fit: BoxFit.contain,
+                          fit: BoxFit.cover,
                         );
                       },
                       options: CarouselOptions(
                         autoPlay: true,
                         enlargeCenterPage: true,
+                        disableCenter: true,
+                        viewportFraction: 0.8,
+                        enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+                        pageSnapping: true,
                         onPageChanged: (index, _) {
                           setState(() {
                             currentSlideIndex = index;

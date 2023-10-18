@@ -5,8 +5,6 @@ import 'package:ENEB_HUB/drawer/widget/navigation_drawer_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_image_slider.dart';
 
-
-
 import 'package:ENEB_HUB/App/Screens/Authentication/AuthManagement.dart';
 // import 'package:ENEB_HUB/App/Screens/Authentication/Login_Register.dart';
 // import 'package:ENEB_HUB/App/Screens/Authentication/SignUpScreen.dart';
@@ -16,7 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'firebase_options.dart';
-                                               
+
 Size? mq;
 
 Future<void> main() async {
@@ -50,19 +48,15 @@ class MyApp extends StatelessWidget {
               scaffoldBackgroundColor: Colors.white,
               primarySwatch: Colors.blue,
               useMaterial3: true),
-          home: const ImageSliderFirebase(),
+          home: const AuthPage(),
         );
       },
     );
   }
 }
 
-
-
-
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
@@ -115,5 +109,3 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
-
-

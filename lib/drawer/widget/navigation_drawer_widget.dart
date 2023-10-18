@@ -14,7 +14,7 @@ class NavigationDrawerWidget extends StatelessWidget {
 
     return Drawer(
       child: Material(
-        color: Color.fromRGBO(50, 75, 205, 1),
+        color: Colors.grey.shade500,
         child: ListView(
           children: <Widget>[
             buildHeader(
@@ -94,23 +94,27 @@ class NavigationDrawerWidget extends StatelessWidget {
           child: Row(
             children: [
               CircleAvatar(radius: 30, backgroundImage: NetworkImage(urlImage)),
-              SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    email,
-                    style: TextStyle(fontSize: 14, color: Colors.white),
-                  ),
-                ],
+              const SizedBox(width: 10),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      email,
+                      style: const TextStyle(fontSize: 14, color: Colors.white),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-              Spacer(),
-              CircleAvatar(
+              const SizedBox(width: 10),
+              const CircleAvatar(
                 radius: 24,
                 backgroundColor: Color.fromRGBO(30, 60, 168, 1),
                 child: Icon(Icons.add_comment_outlined, color: Colors.white),
