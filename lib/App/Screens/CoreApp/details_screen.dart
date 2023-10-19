@@ -282,16 +282,6 @@ class BookInfo extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Crushing &",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4
-                          ?.copyWith(fontSize: 28),
-                    ),
-                  ),
-                  Container(
                     margin: EdgeInsets.only(top: size.height * .005),
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.only(top: 0),

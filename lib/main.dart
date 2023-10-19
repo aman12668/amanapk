@@ -3,7 +3,7 @@ import 'package:ENEB_HUB/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:ENEB_HUB/drawer/widget/navigation_drawer_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_image_slider.dart';
+import 'image_slider.dart';
 
 import 'package:ENEB_HUB/App/Screens/Authentication/AuthManagement.dart';
 // import 'package:ENEB_HUB/App/Screens/Authentication/Login_Register.dart';
@@ -96,7 +96,7 @@ class WelcomeScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return HomeScreen();
+                        return const HomeScreen();
                       },
                     ),
                   );

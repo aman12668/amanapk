@@ -1,5 +1,6 @@
 import 'package:ENEB_HUB/Widgets/book_placeholder-card.widget.dart';
 import 'package:ENEB_HUB/core/Database/books.service.dart';
+import 'package:ENEB_HUB/image_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -21,40 +22,40 @@ extension StringExtension on String {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+// class HomeScreenTest extends StatelessWidget {
+//   const HomeScreenTest({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           const Center(
+//             child: Text("Login Successfull"),
+//           ),
+//           SizedBox(
+//             height: 10.h,
+//           ),
+//           ElevatedButton(
+//               onPressed: () {
+//                 FirebaseAuth.instance.signOut();
+//               },
+//               child: const Text('Log Out Now'))
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Center(
-            child: Text("Login Successfull"),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              child: const Text('Log Out Now'))
-        ],
-      ),
-    );
-  }
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class HomeScreen1 extends StatefulWidget {
-  const HomeScreen1({super.key});
-
-  @override
-  State<HomeScreen1> createState() => _HomeScreen1State();
-}
-
-class _HomeScreen1State extends State<HomeScreen1> {
+class _HomeScreenState extends State<HomeScreen> {
   List<BooksList>? booksList;
 
   @override
@@ -113,6 +114,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                     ),
                   ),
                   const SizedBox(height: 30),
+                  const ImageSliderFirebase(),
                   buildBooksList(context),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
