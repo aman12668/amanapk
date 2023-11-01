@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class FavouratePage extends StatelessWidget {
-  const FavouratePage({super.key});
+class SettingPage extends StatelessWidget {
+  const SettingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,10 +9,10 @@ class FavouratePage extends StatelessWidget {
       backgroundColor: Color.fromARGB(255, 22, 233, 222),
       body: Center(
         child: Text(
-          "Favourate",
+          "Coming Soon....",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 60,
+            fontSize: 40,
             color: Colors.black,
           ),
         ),

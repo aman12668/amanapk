@@ -28,7 +28,7 @@ class ButtonWidget extends StatelessWidget {
           SizedBox(width: 16),
           Text(
             text,
-            style: TextStyle(fontSize: 22, color: Colors.white),
+            style: const TextStyle(fontSize: 22, color: Colors.black),
           ),
         ],
       );

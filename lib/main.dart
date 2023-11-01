@@ -3,9 +3,9 @@ import 'package:ENEB_HUB/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:ENEB_HUB/drawer/widget/navigation_drawer_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_image_slider.dart';
-
-
+import 'image_slider.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'dart:io';
 
 import 'package:ENEB_HUB/App/Screens/Authentication/AuthManagement.dart';
 // import 'package:ENEB_HUB/App/Screens/Authentication/Login_Register.dart';
@@ -16,7 +16,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'firebase_options.dart';
-                                               
+ /*void main() async{
+  runApp(const MyApp());
+  WidgetsBinding.instance.addPostFrameCallback((timeStamp) async{ 
+    if (Platform.isAndroid){
+      await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    }
+  });
+ } */
 Size? mq;
 
 Future<void> main() async {
@@ -29,10 +36,22 @@ Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
+  
+
+  WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    if (Platform.isAndroid) {
+      await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+     }
+  });
 
   runApp(const MyApp());
 }
 
+ 
+  
+
+
+ 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -40,6 +59,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
+      
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
@@ -50,19 +70,22 @@ class MyApp extends StatelessWidget {
               scaffoldBackgroundColor: Colors.white,
               primarySwatch: Colors.blue,
               useMaterial3: true),
-          home: const ImageSliderFirebase(),
+          home: const AuthPage(),
+          
         );
       },
     );
   }
+     
 }
 
 
 
+  
+
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +125,7 @@ class WelcomeScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return HomeScreen();
+                        return const HomeScreen();
                       },
                     ),
                   );
@@ -115,5 +138,3 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
-
-

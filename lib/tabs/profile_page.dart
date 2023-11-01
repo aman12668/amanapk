@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SearchPage extends StatelessWidget {
-  const SearchPage({super.key});
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,10 +9,10 @@ class SearchPage extends StatelessWidget {
       backgroundColor: Color.fromARGB(255, 22, 233, 222),
       body: Center(
         child: Text(
-          "Search",
+          "Coming Soon....",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 60,
+            fontSize: 40,
             color: Colors.black,
           ),
         ),

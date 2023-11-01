@@ -1,10 +1,7 @@
 import 'package:ENEB_HUB/Widgets/book_placeholder-card.widget.dart';
 import 'package:ENEB_HUB/core/Database/books.service.dart';
-import 'package:ENEB_HUB/drawer/widget/navigation_drawer_widget.dart';
+import 'package:ENEB_HUB/image_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-
-
 
 import 'package:flutter/material.dart';
 
@@ -17,42 +14,49 @@ import 'package:ENEB_HUB/widgets/reading_card_list.dart';
 import 'package:ENEB_HUB/widgets/two_side_rounded_button.dart';
 
 import '../../../core/Controllers/Models/book_model.dart';
+import '../../../drawer/widget/navigation_drawer_widget.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Center(
-            child: Text("Login Successfull"),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              child: const Text('Log Out Now'))
-        ],
-      ),
-    );
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
   }
 }
 
-class HomeScreen1 extends StatefulWidget {
-  const HomeScreen1({super.key});
+// class HomeScreenTest extends StatelessWidget {
+//   const HomeScreenTest({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           const Center(
+//             child: Text("Login Successfull"),
+//           ),
+//           SizedBox(
+//             height: 10.h,
+//           ),
+//           ElevatedButton(
+//               onPressed: () {
+//                 FirebaseAuth.instance.signOut();
+//               },
+//               child: const Text('Log Out Now'))
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<HomeScreen1> createState() => _HomeScreen1State();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreen1State extends State<HomeScreen1> {
-  List<Book>? books;
+class _HomeScreenState extends State<HomeScreen> {
+  List<BooksList>? booksList;
 
   @override
   void initState() {
@@ -63,23 +67,32 @@ class _HomeScreen1State extends State<HomeScreen1> {
   BookService bookService = BookService();
 
   void fetchBooks() async {
-    final result = await bookService.getBooks(); // for fetch books
+    final result = await bookService.getBooksByCategory(); // for fetch books
 
     setState(() {
-      books = result;
+      booksList = result;
     });
   }
+  /*BookService booksService = BookService();
+
+  void fetchBook() async {
+    final result = await bookService.getBookByCategories(); // for fetch books
+
+    setState(() {
+      booksList = result;
+    });
+  }  */
+ 
+
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: NavigationDrawerWidget(),
-
-      
-
-       
+     // drawer: NavigationDrawerWidget(),
+     drawer: const MenuScreenPage(),
       body: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -92,6 +105,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                   fit: BoxFit.fitWidth,
                 ),
               ),
+              
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -102,7 +116,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                       text: TextSpan(
                         style: Theme.of(context).textTheme.headline4,
                         children: const [
-                          TextSpan(text: "What are you \nreading "),
+                          TextSpan(text: "What are you \nLearning "),
                           TextSpan(
                               text: "today?",
                               style: TextStyle(
@@ -113,6 +127,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                     ),
                   ),
                   const SizedBox(height: 30),
+                  const ImageSliderFirebase(),
                   buildBooksList(context),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -184,7 +199,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                                                 ),
                                               ),
                                               Text(
-                                                "Gary Venchuk",
+                                                "Unknown",
                                                 style: TextStyle(
                                                   color: kLightBlackColor,
                                                 ),
@@ -234,25 +249,14 @@ class _HomeScreen1State extends State<HomeScreen1> {
           ],
         ),
       ),
+     
+
     );
+
   }
 
-
-
-                                 
-                                      
-                                            
-                                                
-                                            
-                                           
-                                        
-                                      
-                                  
-
-
-
   Widget buildBooksList(BuildContext context) {
-    if (books?.isEmpty ?? true) {
+    if (booksList?.isEmpty ?? true) {
       return SizedBox(
         height: 285,
         width: double.infinity,
@@ -271,39 +275,89 @@ class _HomeScreen1State extends State<HomeScreen1> {
         ),
       );
     } else {
-      return SizedBox(
-        height: 285,
-        width: double.infinity,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: books!.length,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          separatorBuilder: (context, index) => const SizedBox(
-            width: 24,
-          ),
-          itemBuilder: (context, index) {
-            final item = books![index];
-            return ReadingListCard(
-              image: item.cover,
-              title: item.title,
-              auth: item.author,
-              rating: item.rating,
-              pressDetails: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return DetailsScreen(
-                        book: item,
+      return ListView.separated(
+        itemCount: booksList!.length,
+        separatorBuilder: (context, index) => const SizedBox(height: 24),
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        clipBehavior: Clip.none,
+        padding: const EdgeInsets.all(0).copyWith(bottom: 40, top: 40),
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) {
+          BooksList books = booksList![index];
+          return SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          books.category.capitalize(),
+                          
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6!
+                              .copyWith(fontWeight: FontWeight.w600),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        'Read More',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black38,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.black38,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 16),
+                  height: 250,
+                  width: double.infinity,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    clipBehavior: Clip.none,
+                    itemCount: books.books.length,
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      width: 24,
+                    ),
+                    itemBuilder: (context, index) {
+                      final book = books.books[index];
+                      return ReadingListCard(
+                        image: book.cover,
+                        title: book.title,
+                        auth: book.author,
+                        rating: book.rating,
+                        pressDetails: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return DetailsScreen(
+                                  book: book,
+                                );
+                              },
+                            ),
+                          );
+                        },
                       );
                     },
                   ),
-                );
-              },
-            );
-          },
-        ),
+                ),
+              ],
+            ),
+          );
+        },
       );
     }
   }
@@ -401,22 +455,8 @@ class _HomeScreen1State extends State<HomeScreen1> {
           ),
         ],
       ),
+      
+
     );
   }
-}
-
-
-
-
-@override 
-Widget build(BuildContext context){
-  return Scaffold(
-    drawer: Drawer(
-      child: ListView(
-        children: [
-
-        ],
-      ),
-    ),
-  );
 }
