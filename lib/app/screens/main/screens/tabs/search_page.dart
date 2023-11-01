@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class SearchPage extends StatelessWidget {
+  const SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Color.fromARGB(255, 22, 233, 222),
+      backgroundColor: Colors.white,
       body: Center(
         child: Text(
-          "Home",
+          "Coming Soon....",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 60,
+            fontSize: 40,
             color: Colors.black,
           ),
         ),

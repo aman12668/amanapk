@@ -1,4 +1,4 @@
-import 'package:ENEB_HUB/Widgets/consttants.dart';
+import 'package:ENEB_HUB/app/Widgets/consttants.dart';
 import 'package:flutter/material.dart';
 
 class BookRating extends StatelessWidget {

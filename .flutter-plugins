@@ -11,6 +11,7 @@ firebase_database_web=/Users/developer/.pub-cache/hosted/pub.dev/firebase_databa
 firebase_storage=/Users/developer/.pub-cache/hosted/pub.dev/firebase_storage-11.2.8/
 firebase_storage_web=/Users/developer/.pub-cache/hosted/pub.dev/firebase_storage_web-3.6.8/
 flutter_pdfview=/Users/developer/.pub-cache/hosted/pub.dev/flutter_pdfview-1.3.2/
+flutter_windowmanager=/Users/developer/.pub-cache/hosted/pub.dev/flutter_windowmanager-0.2.0/
 fluttertoast=/Users/developer/.pub-cache/hosted/pub.dev/fluttertoast-8.2.2/
 path_provider=/Users/developer/.pub-cache/hosted/pub.dev/path_provider-2.1.1/
 path_provider_android=/Users/developer/.pub-cache/hosted/pub.dev/path_provider_android-2.2.0/

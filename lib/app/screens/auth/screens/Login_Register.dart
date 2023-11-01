@@ -1,5 +1,5 @@
-import 'package:ENEB_HUB/App/Screens/Authentication/LoginScreen.dart';
-import 'package:ENEB_HUB/App/Screens/Authentication/SignUpScreen.dart';
+import 'package:ENEB_HUB/app/screens/auth/screens/LoginScreen.dart';
+import 'package:ENEB_HUB/app/screens/auth/screens/SignUpScreen.dart';
 import 'package:flutter/material.dart';
 
 class LoginandRegister extends StatefulWidget {

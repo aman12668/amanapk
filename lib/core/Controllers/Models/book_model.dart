@@ -7,6 +7,7 @@ class Book {
   List<Chapter> chapters;
   String author;
   String category;
+  String studyLevel;
   Book({
     required this.title,
     required this.rating,
@@ -15,7 +16,8 @@ class Book {
     required this.isFavorite,
     required this.chapters,
     required this.author,
-    required this.category, required, 
+    required this.category,
+    required this.studyLevel,
   });
 }
 

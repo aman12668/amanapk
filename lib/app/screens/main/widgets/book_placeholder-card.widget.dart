@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:ENEB_HUB/Widgets/consttants.dart';
+import 'package:ENEB_HUB/app/Widgets/consttants.dart';
 
 class BookPlaceholderCard extends StatelessWidget {
   const BookPlaceholderCard({super.key});

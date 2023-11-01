@@ -1,7 +1,10 @@
-import 'package:ENEB_HUB/App/Screens/Authentication/LoginScreen.dart';
-import 'package:ENEB_HUB/Widgets/CustomExit.dart';
-import 'package:ENEB_HUB/Widgets/LoginTextField.dart';
-import 'package:ENEB_HUB/Widgets/customWillPopScope.dart';
+import 'package:flutter/material.dart';
+
+import 'package:ENEB_HUB/app/screens/auth/screens/LoginScreen.dart';
+import 'package:ENEB_HUB/app/Widgets/custom_Exit.dart';
+import 'package:ENEB_HUB/app/screens/auth/widgets/login_text_field.dart';
+import 'package:ENEB_HUB/app/widgets/custom_will_pop_scope.dart';
+
 import 'package:ENEB_HUB/constant/Animations/WidgetFadeAnimation.dart';
 import 'package:ENEB_HUB/constant/Styles/Colors.dart';
 // import 'package:ENEB_HUB/core/Controllers/Resources/Authentication.dart';
@@ -9,7 +12,6 @@ import 'package:ENEB_HUB/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';

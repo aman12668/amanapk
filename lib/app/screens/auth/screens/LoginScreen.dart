@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:ENEB_HUB/App/Screens/Authentication/SignUpScreen.dart';
-import 'package:ENEB_HUB/Widgets/CustomButton.dart';
-import 'package:ENEB_HUB/Widgets/CustomExit.dart';
-import 'package:ENEB_HUB/Widgets/LoginTextField.dart';
-import 'package:ENEB_HUB/Widgets/customWillPopScope.dart';
+import 'package:ENEB_HUB/app/screens/auth/screens/SignUpScreen.dart';
+import 'package:ENEB_HUB/app/Widgets/custom_button.dart';
+import 'package:ENEB_HUB/app/Widgets/custom_exit.dart';
+import 'package:ENEB_HUB/app/screens/auth/widgets/login_text_field.dart';
+import 'package:ENEB_HUB/app/Widgets/custom_will_pop_scope.dart';
 import 'package:ENEB_HUB/constant/Animations/WidgetFadeAnimation.dart';
 import 'package:ENEB_HUB/constant/Styles/Colors.dart';
 import 'package:ENEB_HUB/main.dart';

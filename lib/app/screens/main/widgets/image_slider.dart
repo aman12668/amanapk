@@ -1,10 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-
-import 'Widgets/consttants.dart';
+import 'package:ENEB_HUB/app/widgets/consttants.dart';
 
 class ImageSliderFirebase extends StatefulWidget {
   const ImageSliderFirebase({super.key});

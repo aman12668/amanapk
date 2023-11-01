@@ -1,5 +1,5 @@
-import 'package:ENEB_HUB/App/Screens/Authentication/Login_Register.dart';
-import 'package:ENEB_HUB/tabs/curve_navigation_bar.dart';
+import 'package:ENEB_HUB/app/screens/auth/screens/Login_Register.dart';
+import 'package:ENEB_HUB/app/screens/main/screens/tabs/curve_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

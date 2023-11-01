@@ -17,6 +17,7 @@ class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Coming Soon....'),
       ),
@@ -33,12 +34,13 @@ class ResponsiveFavoriteList extends StatelessWidget {
         if (constraints.maxWidth > 600) {
           // For larger screens, use a GridView with multiple columns.
           return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, // You can adjust this as needed
             ),
             itemCount: 10, // Adjust the number of items as needed
             itemBuilder: (context, index) {
-              return FavoriteItem(title: 'Item $index', isFavorite: index.isEven);
+              return FavoriteItem(
+                  title: 'Item $index', isFavorite: index.isEven);
             },
           );
         } else {
@@ -46,7 +48,8 @@ class ResponsiveFavoriteList extends StatelessWidget {
           return ListView.builder(
             itemCount: 10, // Adjust the number of items as needed
             itemBuilder: (context, index) {
-              return FavoriteItem(title: 'Item $index', isFavorite: index.isEven);
+              return FavoriteItem(
+                  title: 'Item $index', isFavorite: index.isEven);
             },
           );
         }

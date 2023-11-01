@@ -1,14 +1,13 @@
-import 'package:ENEB_HUB/drawer/page/favourites_page.dart';
+import 'package:ENEB_HUB/app/screens/main/screens/drawer/page/favourites_page.dart';
+import 'package:ENEB_HUB/app/screens/main/screens/tabs/favourate_page.dart';
+import 'package:ENEB_HUB/app/screens/main/screens/tabs/profile_page.dart';
+import 'package:ENEB_HUB/app/screens/main/screens/tabs/search_page.dart';
+import 'package:ENEB_HUB/app/screens/main/screens/tabs/setting_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:ENEB_HUB/tabs/favourate_page.dart';
 
-import 'package:ENEB_HUB/tabs/profile_page.dart';
-import 'package:ENEB_HUB/tabs/search_page.dart';
-import 'package:ENEB_HUB/tabs/setting_page.dart';
-
-import '../App/Screens/CoreApp/HomeScreen.dart';
-import '../Widgets/consttants.dart';
+import '../HomeScreen.dart';
+import '../../../../Widgets/consttants.dart';
 
 class Tabs extends StatefulWidget {
   const Tabs({super.key});
@@ -19,12 +18,12 @@ class Tabs extends StatefulWidget {
 
 class _TabsState extends State<Tabs> {
   int index = 0;
-  final screen =  [
-    HomeScreen(),
-    SearchPage(),
+  final screen = [
+    const HomeScreen(),
     FavoritePage(),
-    ProfilePage(),
-    SettingPage(),
+    const SearchPage(),
+    const ProfilePage(),
+    const SettingPage(),
   ];
 
   onPageChange(int pageIndex) {
@@ -97,7 +96,7 @@ class _TabsState extends State<Tabs> {
 
   Widget buildCustomBottomNavigation() {
     return Container(
-      height: 65,
+      height: 60,
       width: double.infinity,
       margin: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -107,7 +106,7 @@ class _TabsState extends State<Tabs> {
           BoxShadow(
             offset: const Offset(0, 0),
             blurRadius: 0,
-            spreadRadius: 5,
+            spreadRadius: 3,
             color: kShadowColor.withOpacity(0.3),
           ),
         ],
@@ -132,8 +131,8 @@ class _TabsState extends State<Tabs> {
             children: [
               IconButton(
                 icon: Icon(
-                  Icons.search_rounded,
-                  color: index == 1 ? Colors.black : Colors.grey,
+                  Icons.favorite,
+                  color: index == 1 ? Colors.redAccent : Colors.grey,
                 ),
                 onPressed: () => onPageChange(1),
               ),
@@ -144,7 +143,7 @@ class _TabsState extends State<Tabs> {
             children: [
               IconButton(
                 icon: Icon(
-                  Icons.grid_view_rounded,
+                  Icons.search_rounded,
                   color: index == 2 ? Colors.black : Colors.grey,
                 ),
                 onPressed: () => onPageChange(2),
@@ -156,12 +155,24 @@ class _TabsState extends State<Tabs> {
             children: [
               IconButton(
                 icon: Icon(
-                  Icons.person_3_rounded,
+                  Icons.grid_view_rounded,
                   color: index == 3 ? Colors.black : Colors.grey,
                 ),
                 onPressed: () => onPageChange(3),
               ),
               if (index == 3) buildActivePageDot()
+            ],
+          ),
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.person_3_rounded,
+                  color: index == 4 ? Colors.black : Colors.grey,
+                ),
+                onPressed: () => onPageChange(4),
+              ),
+              if (index == 4) buildActivePageDot()
             ],
           ),
         ],

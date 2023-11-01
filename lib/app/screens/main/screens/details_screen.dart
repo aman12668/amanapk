@@ -1,8 +1,9 @@
-import 'package:ENEB_HUB/App/Screens/CoreApp/pdf_view.dart';
-import 'package:ENEB_HUB/Widgets/consttants.dart';
+import 'package:ENEB_HUB/app/screens/main/screens/pdf_view.dart';
+import 'package:ENEB_HUB/app/Widgets/consttants.dart';
+import 'package:ENEB_HUB/app/screens/main/widgets/book_rating.dart';
+import 'package:ENEB_HUB/app/screens/main/widgets/rounded_button.dart';
 import 'package:ENEB_HUB/core/Controllers/Models/book_model.dart';
-import 'package:ENEB_HUB/widgets/book_rating.dart';
-import 'package:ENEB_HUB/widgets/rounded_button.dart';
+
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatelessWidget {

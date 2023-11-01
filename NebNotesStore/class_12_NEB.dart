@@ -1,10 +1,8 @@
-
 import 'dart:html';
 
-import 'package:ENEB_HUB/App/Screens/CoreApp/HomeScreen.dart';
+import 'package:ENEB_HUB/app/screens/main/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
-
 
 class MyApp extends StatefulWidget {
   const MyApp({this.progressExample = false});
@@ -26,7 +24,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   loadDocument() async {
-    document = await PDFDocument.fromURL('gs://flutternode.appspot.com/class_12_Notes/pdfs');
+    document = await PDFDocument.fromURL(
+        'gs://flutternode.appspot.com/class_12_Notes/pdfs');
 
     setState(() => _isLoading = false);
   }
@@ -59,7 +58,7 @@ class _MyAppState extends State<MyApp> {
       drawer: Drawer(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 36),
+            const SizedBox(height: 36),
             ListTile(
               title: Text('Load from Assets'),
               onTap: () {
@@ -84,7 +83,7 @@ class _MyAppState extends State<MyApp> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
+                    builder: (context) => const HomeScreen(),
                   ),
                 );
               },
@@ -97,16 +96,16 @@ class _MyAppState extends State<MyApp> {
       ),
       body: Center(
         child: _isLoading
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : PDFViewer(
                 document: document,
-                
+
                 zoomSteps: 1,
                 numberPickerConfirmWidget: const Text(
                   "Confirm",
                 ),
                 //uncomment below line to preload all pages
-                   lazyLoad: true,
+                lazyLoad: true,
                 // uncomment below line to scroll vertically
                 // scrollDirection: Axis.vertical,
 

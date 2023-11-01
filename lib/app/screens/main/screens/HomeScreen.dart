@@ -1,20 +1,21 @@
-import 'package:ENEB_HUB/Widgets/book_placeholder-card.widget.dart';
+import 'package:ENEB_HUB/app/screens/main/screens/details_screen.dart';
+import 'package:ENEB_HUB/app/screens/main/widgets/book_placeholder-card.widget.dart';
+import 'package:ENEB_HUB/app/screens/main/widgets/book_rating.dart';
+import 'package:ENEB_HUB/app/screens/main/widgets/image_slider.dart';
+import 'package:ENEB_HUB/app/screens/main/widgets/reading_card_list.dart';
+import 'package:ENEB_HUB/app/screens/main/widgets/two_side_rounded_button.dart';
 import 'package:ENEB_HUB/core/Database/books.service.dart';
-import 'package:ENEB_HUB/image_slider.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:ENEB_HUB/Widgets/consttants.dart';
-import 'package:ENEB_HUB/App/Screens/CoreApp/details_screen.dart';
-import 'package:ENEB_HUB/widgets/book_rating.dart';
-import 'package:ENEB_HUB/widgets/reading_card_list.dart';
-import 'package:ENEB_HUB/widgets/two_side_rounded_button.dart';
+import 'package:ENEB_HUB/app/Widgets/consttants.dart';
 
-import '../../../core/Controllers/Models/book_model.dart';
-import '../../../drawer/widget/navigation_drawer_widget.dart';
+import '../../../../core/Controllers/Models/book_model.dart';
+import 'drawer/widget/navigation_drawer_widget.dart';
 
 extension StringExtension on String {
   String capitalize() {
@@ -82,15 +83,13 @@ class _HomeScreenState extends State<HomeScreen> {
       booksList = result;
     });
   }  */
- 
-
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-     // drawer: NavigationDrawerWidget(),
-     drawer: const MenuScreenPage(),
+      // drawer: NavigationDrawerWidget(),
+      drawer: const MenuScreenPage(),
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: Column(
@@ -105,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   fit: BoxFit.fitWidth,
                 ),
               ),
-              
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -249,10 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-     
-
     );
-
   }
 
   Widget buildBooksList(BuildContext context) {
@@ -297,7 +292,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       Flexible(
                         child: Text(
                           books.category.capitalize(),
-                          
                           style: Theme.of(context)
                               .textTheme
                               .headline6!
@@ -334,10 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (context, index) {
                       final book = books.books[index];
                       return ReadingListCard(
-                        image: book.cover,
-                        title: book.title,
-                        auth: book.author,
-                        rating: book.rating,
+                        book: book,
                         pressDetails: () {
                           Navigator.push(
                             context,
@@ -455,8 +446,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      
-
     );
   }
 }

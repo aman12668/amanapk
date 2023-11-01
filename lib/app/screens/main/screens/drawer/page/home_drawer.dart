@@ -1,10 +1,8 @@
-import 'package:ENEB_HUB/App/Screens/Authentication/AuthManagement.dart';
-import 'package:ENEB_HUB/App/Screens/CoreApp/HomeScreen.dart';
+import 'package:ENEB_HUB/app/screens/auth/screens/AuthManagement.dart';
+import 'package:ENEB_HUB/app/screens/main/screens/HomeScreen.dart';
 
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-
-
 
 class Home extends StatelessWidget {
   const Home({super.key});

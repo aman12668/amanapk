@@ -1,29 +1,25 @@
-import 'package:ENEB_HUB/Widgets/consttants.dart';
-import 'package:ENEB_HUB/widgets/book_rating.dart';
-import 'package:ENEB_HUB/widgets/two_side_rounded_button.dart';
+import 'package:ENEB_HUB/app/Widgets/consttants.dart';
+
+import 'package:ENEB_HUB/app/screens/main/widgets/book_rating.dart';
+import 'package:ENEB_HUB/app/screens/main/widgets/two_side_rounded_button.dart';
+import 'package:ENEB_HUB/core/Controllers/Models/book_model.dart';
 import 'package:flutter/material.dart';
 
 class ReadingListCard extends StatelessWidget {
-  final String image;
-  final String title;
-  final String auth;
-  final double rating;
+  final Book book;
   final Function()? pressDetails;
   final Function? pressRead;
 
   const ReadingListCard({
     super.key,
-    required this.image,
-    required this.title,
-    required this.auth,
-    required this.rating,
+    required this.book,
     this.pressDetails,
     this.pressRead,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 250,
       width: 202,
       child: Stack(
@@ -50,7 +46,7 @@ class ReadingListCard extends StatelessWidget {
           Positioned(
             top: 0,
             child: Image.network(
-              image,
+              book.cover,
               width: 150,
               height: 150,
               fit: BoxFit.cover,
@@ -62,12 +58,17 @@ class ReadingListCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 IconButton(
-                  icon: const Icon(
-                    Icons.favorite_border,
-                  ),
+                  icon: book.isFavorite
+                      ? const Icon(
+                          Icons.favorite,
+                          color: Colors.redAccent,
+                        )
+                      : const Icon(
+                          Icons.favorite_border,
+                        ),
                   onPressed: () {},
                 ),
-                BookRating(score: rating),
+                BookRating(score: book.rating),
               ],
             ),
           ),
@@ -80,20 +81,20 @@ class ReadingListCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(left: 24),
+                    padding: const EdgeInsets.only(left: 24),
                     child: RichText(
                       maxLines: 2,
                       text: TextSpan(
-                        style: TextStyle(color: kBlackColor),
+                        style: const TextStyle(color: kBlackColor),
                         children: [
                           TextSpan(
-                            text: "$title\n",
+                            text: "$book.title\n",
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           TextSpan(
-                            text: auth,
+                            text: book.author,
                             style: const TextStyle(
                               color: kLightBlackColor,
                             ),
