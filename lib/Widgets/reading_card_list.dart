@@ -1,3 +1,4 @@
+import 'package:ENEB_HUB/App/Screens/CoreApp/details_screen.dart';
 import 'package:ENEB_HUB/Widgets/consttants.dart';
 import 'package:ENEB_HUB/widgets/book_rating.dart';
 import 'package:ENEB_HUB/widgets/two_side_rounded_button.dart';
@@ -24,7 +25,8 @@ class ReadingListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250,
+      margin: const EdgeInsets.only(bottom: 40),
+      height: 245,
       width: 202,
       child: Stack(
         children: <Widget>[
@@ -33,7 +35,7 @@ class ReadingListCard extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              height: 220,
+              height: 221,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(29),
@@ -47,14 +49,10 @@ class ReadingListCard extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            top: 0,
-            child: Image.network(
-              image,
-              width: 150,
-              height: 150,
-              fit: BoxFit.cover,
-            ),
+          Image.network(
+            image,
+            width: 150,
+            height: 150,
           ),
           Positioned(
             top: 35,
@@ -72,7 +70,7 @@ class ReadingListCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 0,
+            top: 160,
             child: SizedBox(
               height: 85,
               width: 202,

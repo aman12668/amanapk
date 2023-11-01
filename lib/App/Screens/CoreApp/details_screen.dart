@@ -9,10 +9,10 @@ class DetailsScreen extends StatelessWidget {
   final Book book;
   const DetailsScreen({super.key, required this.book});
 
-  void goToPdfView(BuildContext context, Chapter chapter) {
+  void goToPdfView(BuildContext context, String chapterPdf) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => PdfView(
-              chapter: chapter,
+              pdf: chapterPdf,
             )));
   }
 
@@ -71,7 +71,7 @@ class DetailsScreen extends StatelessWidget {
                             name: chapter.title,
                             chapterNumber: index + 1,
                             tag: chapter.subtitle,
-                            press: () => goToPdfView(context, chapter),
+                            press: () => goToPdfView(context, chapter.pdf),
                           );
                         },
                         separatorBuilder: (context, index) =>
@@ -250,6 +250,10 @@ class ChapterCard extends StatelessWidget {
   }
 }
 
+
+
+
+
 class BookInfo extends StatelessWidget {
   const BookInfo({
     super.key,
@@ -281,6 +285,16 @@ class BookInfo extends StatelessWidget {
               flex: 1,
               child: Column(
                 children: <Widget>[
+                   Container(
+                     alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Crushing &",
+                      style: Theme.of(context)
+                           .textTheme
+                          .headline4
+                           ?.copyWith(fontSize: 28),
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.only(top: size.height * .005),
                     alignment: Alignment.centerLeft,

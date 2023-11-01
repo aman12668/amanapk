@@ -6,7 +6,7 @@ class Book {
   bool isFavorite;
   List<Chapter> chapters;
   String author;
-  String category;
+
   Book({
     required this.title,
     required this.rating,
@@ -15,7 +15,6 @@ class Book {
     required this.isFavorite,
     required this.chapters,
     required this.author,
-    required this.category,
   });
 }
 
@@ -28,14 +27,5 @@ class Chapter {
     required this.title,
     required this.subtitle,
     required this.pdf,
-  });
-}
-
-class BooksList {
-  String category;
-  List<Book> books;
-  BooksList({
-    required this.category,
-    required this.books,
   });
 }

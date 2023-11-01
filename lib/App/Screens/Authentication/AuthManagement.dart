@@ -1,5 +1,5 @@
 import 'package:ENEB_HUB/App/Screens/Authentication/Login_Register.dart';
-import 'package:ENEB_HUB/tabs/curve_navigation_bar.dart';
+import 'package:ENEB_HUB/App/Screens/CoreApp/HomeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ class AuthPage extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return const Tabs();
+              return const HomeScreen1();
             } else {
               return const LoginandRegister();
             }
