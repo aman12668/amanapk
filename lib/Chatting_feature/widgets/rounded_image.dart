@@ -34,7 +34,7 @@ class RoundedImageFile extends StatelessWidget {
   final PlatformFile image;
   final double size;
 
-  RoundedImageFile({
+  const RoundedImageFile({
     required Key key,
     required this.image,
     required this.size,
@@ -48,7 +48,7 @@ class RoundedImageFile extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage(image.path),
+          image: AssetImage(image.path!),
         ),
         borderRadius: BorderRadius.all(Radius.circular(size)),
         color: Colors.black,

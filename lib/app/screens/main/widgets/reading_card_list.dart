@@ -88,7 +88,7 @@ class ReadingListCard extends StatelessWidget {
                         style: const TextStyle(color: kBlackColor),
                         children: [
                           TextSpan(
-                            text: "$book.title\n",
+                            text: "${book.title}\n",
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
