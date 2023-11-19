@@ -1,82 +1,68 @@
+import 'package:ENEB_HUB/app/screens/main/widgets/book_placeholder-card.widget.dart';
+import 'package:ENEB_HUB/app/screens/main/widgets/reading_card_list.dart';
+import 'package:ENEB_HUB/core/Controllers/Models/book_model.dart';
+import 'package:ENEB_HUB/core/Database/books.service.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
+class FavoriteScreen extends StatefulWidget {
+  const FavoriteScreen({super.key});
+
+  @override
+  State<FavoriteScreen> createState() => _FavoriteScreenState();
 }
 
-class MyApp extends StatelessWidget {
+class _FavoriteScreenState extends State<FavoriteScreen> {
+  List<Book>? books;
+  @override
+  void initState() {
+    loadBooks();
+
+    super.initState();
+  }
+
+  void loadBooks() async {
+    final result = await BookService().getFavoriteBooks();
+
+    setState(() {
+      books = result;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: FavoritePage(),
+    return Container(
+      padding: const EdgeInsets.only(bottom: 85),
+      child: createList(context),
     );
   }
-}
 
-class FavoritePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Coming Soon....'),
-      ),
-      body: ResponsiveFavoriteList(),
-    );
-  }
-}
-
-class ResponsiveFavoriteList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth > 600) {
-          // For larger screens, use a GridView with multiple columns.
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // You can adjust this as needed
-            ),
-            itemCount: 10, // Adjust the number of items as needed
-            itemBuilder: (context, index) {
-              return FavoriteItem(
-                  title: 'Item $index', isFavorite: index.isEven);
-            },
+  Widget createList(BuildContext ctx) {
+    if (books?.isEmpty ?? true) {
+      return ListView.separated(
+        shrinkWrap: true,
+        itemCount: 5,
+        separatorBuilder: (context, index) => const SizedBox(height: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 25)
+            .copyWith(bottom: 120, top: 80),
+        itemBuilder: (context, index) {
+          return const BookPlaceholderCard();
+        },
+      );
+    } else {
+      return ListView.separated(
+        shrinkWrap: true,
+        itemCount: books!.length,
+        separatorBuilder: (context, index) => const SizedBox(height: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 25)
+            .copyWith(bottom: 120, top: 80),
+        itemBuilder: (context, index) {
+          final book = books?[index];
+          return ReadingListCard(
+            book: book!,
           );
-        } else {
-          // For smaller screens, use a ListView.
-          return ListView.builder(
-            itemCount: 10, // Adjust the number of items as needed
-            itemBuilder: (context, index) {
-              return FavoriteItem(
-                  title: 'Item $index', isFavorite: index.isEven);
-            },
-          );
-        }
-      },
-    );
-  }
-}
-
-class FavoriteItem extends StatelessWidget {
-  final String title;
-  final bool isFavorite;
-
-  FavoriteItem({
-    required this.title,
-    required this.isFavorite,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: Icon(
-          isFavorite ? Icons.favorite : Icons.favorite_border,
-          color: isFavorite ? Colors.red : null,
-        ),
-        title: Text(title),
-      ),
-    );
+        },
+      );
+    }
+    ;
   }
 }

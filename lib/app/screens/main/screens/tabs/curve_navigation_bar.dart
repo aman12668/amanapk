@@ -20,7 +20,7 @@ class _TabsState extends State<Tabs> {
   int index = 0;
   final screen = [
     const HomeScreen(),
-    FavoritePage(),
+    const FavoriteScreen(),
     const SearchPage(),
     const ProfilePage(),
     const SettingPage(),

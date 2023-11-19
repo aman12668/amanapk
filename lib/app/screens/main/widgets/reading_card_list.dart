@@ -74,6 +74,8 @@ class ReadingListCard extends StatelessWidget {
           ),
           Positioned(
             bottom: 0,
+            left: 0,
+            right: 0,
             child: SizedBox(
               height: 85,
               width: 202,
@@ -105,14 +107,16 @@ class ReadingListCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      GestureDetector(
-                        onTap: pressDetails,
-                        child: Container(
-                          width: 101,
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          alignment: Alignment.center,
-                          child: const Text("Details"),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: pressDetails,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            alignment: Alignment.center,
+                            child: const Text("Details"),
+                          ),
                         ),
                       ),
                       Expanded(
