@@ -57,4 +57,8 @@ class BookService {
     List<Book> result = books.where((book) => book.isFavorite).toList();
     return result;
   }
+
+  addToFavorite(String id, bool isFavorite) async {
+    await booksCollection.doc(id).update({'is_favorite': isFavorite});
+  }
 }
