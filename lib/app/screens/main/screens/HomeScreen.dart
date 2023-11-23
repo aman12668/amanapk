@@ -5,10 +5,12 @@ import 'package:ENEB_HUB/app/screens/main/widgets/image_slider.dart';
 import 'package:ENEB_HUB/app/screens/main/widgets/reading_card_list.dart';
 import 'package:ENEB_HUB/app/screens/main/widgets/two_side_rounded_button.dart';
 import 'package:ENEB_HUB/core/Database/books.service.dart';
+import 'package:ENEB_HUB/core/providers/books.provider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -49,40 +51,25 @@ extension StringExtension on String {
 //   }
 // }
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  List<BooksList>? booksList;
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  late Future<void> _booksFutre;
 
   @override
   void initState() {
-    fetchBooks();
+    _booksFutre = loadBooks();
     super.initState();
   }
 
-  BookService bookService = BookService();
-
-  void fetchBooks() async {
-    final result = await bookService.getBooksByCategory(); // for fetch books
-
-    setState(() {
-      booksList = result;
-    });
+  Future<void> loadBooks() async {
+    await ref.read(booksProvider.notifier).getBooks();
   }
-  /*BookService booksService = BookService();
-
-  void fetchBook() async {
-    final result = await bookService.getBookByCategories(); // for fetch books
-
-    setState(() {
-      booksList = result;
-    });
-  }  */
 
   @override
   Widget build(BuildContext context) {
@@ -251,106 +238,117 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildBooksList(BuildContext context) {
-    if (booksList?.isEmpty ?? true) {
-      return SizedBox(
-        height: 285,
-        width: double.infinity,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: 5,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          separatorBuilder: (context, index) => const SizedBox(
-            width: 24,
-          ),
-          itemBuilder: (context, index) {
-            return const BookPlaceholderCard();
-          },
-        ),
-      );
-    } else {
-      return ListView.separated(
-        itemCount: booksList!.length,
-        separatorBuilder: (context, index) => const SizedBox(height: 24),
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        clipBehavior: Clip.none,
-        padding: const EdgeInsets.all(0).copyWith(bottom: 40, top: 40),
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          BooksList books = booksList![index];
+    final booksList = ref.watch(booksProvider).books;
+
+    return FutureBuilder(
+      future: _booksFutre,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            (booksList?.isEmpty ?? true)) {
           return SizedBox(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          books.category.capitalize(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline6!
-                              .copyWith(fontWeight: FontWeight.w600),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Read More',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black38,
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.black38,
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 16),
-                  height: 250,
-                  width: double.infinity,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    clipBehavior: Clip.none,
-                    itemCount: books.books.length,
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    separatorBuilder: (context, index) => const SizedBox(
-                      width: 24,
-                    ),
-                    itemBuilder: (context, index) {
-                      final book = books.books[index];
-                      return ReadingListCard(
-                        book: book,
-                        pressDetails: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return DetailsScreen(
-                                  book: book,
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
+            height: 285,
+            width: double.infinity,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemCount: 5,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              separatorBuilder: (context, index) => const SizedBox(
+                width: 24,
+              ),
+              itemBuilder: (context, index) {
+                return const BookPlaceholderCard();
+              },
             ),
           );
-        },
-      );
-    }
+        } else {
+          return ListView.separated(
+            itemCount: booksList!.length,
+            separatorBuilder: (context, index) => const SizedBox(height: 24),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            clipBehavior: Clip.none,
+            padding: const EdgeInsets.all(0).copyWith(bottom: 40, top: 40),
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              BooksList books = booksList![index];
+              return SizedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              books.category.capitalize(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(fontWeight: FontWeight.w600),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Read More',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black38,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.black38,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 16),
+                      height: 250,
+                      width: double.infinity,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        clipBehavior: Clip.none,
+                        itemCount: books.books.length,
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        separatorBuilder: (context, index) => const SizedBox(
+                          width: 24,
+                        ),
+                        itemBuilder: (context, index) {
+                          final book = books.books[index];
+                          return ReadingListCard(
+                            book: book,
+                            pressDetails: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return DetailsScreen(
+                                      book: book,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        }
+      },
+    );
   }
 
   Container bestOfTheDayCard(Size size, BuildContext context) {

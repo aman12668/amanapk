@@ -11,7 +11,7 @@ class BookService {
 
     return querySnapshot.docs.map((doc) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      // print('data ${data['title']}, 🔥 ${data['category']}');
+      print('data ${data}');
       return Book(
         title: data['title'],
         rating: data['rating'],

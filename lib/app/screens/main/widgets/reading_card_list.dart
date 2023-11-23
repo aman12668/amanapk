@@ -3,9 +3,11 @@ import 'package:ENEB_HUB/app/Widgets/consttants.dart';
 import 'package:ENEB_HUB/app/screens/main/widgets/book_rating.dart';
 import 'package:ENEB_HUB/app/screens/main/widgets/two_side_rounded_button.dart';
 import 'package:ENEB_HUB/core/Controllers/Models/book_model.dart';
+import 'package:ENEB_HUB/core/providers/books.provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ReadingListCard extends StatelessWidget {
+class ReadingListCard extends ConsumerStatefulWidget {
   final Book book;
   final Function()? pressDetails;
   final Function? pressRead;
@@ -16,6 +18,19 @@ class ReadingListCard extends StatelessWidget {
     this.pressDetails,
     this.pressRead,
   });
+
+  @override
+  ConsumerState<ReadingListCard> createState() => _ReadingListCardState();
+}
+
+class _ReadingListCardState extends ConsumerState<ReadingListCard> {
+  void addToFav() async {
+    await ref.read(booksProvider.notifier).addToFavorite(widget.book);
+  }
+
+  void removeFromFav() async {
+    await ref.read(booksProvider.notifier).removeFromFavorite(widget.book);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +61,7 @@ class ReadingListCard extends StatelessWidget {
           Positioned(
             top: 0,
             child: Image.network(
-              book.cover,
+              widget.book.cover,
               width: 150,
               height: 150,
               fit: BoxFit.cover,
@@ -58,7 +73,7 @@ class ReadingListCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 IconButton(
-                  icon: book.isFavorite
+                  icon: widget.book.isFavorite
                       ? const Icon(
                           Icons.favorite,
                           color: Colors.redAccent,
@@ -66,9 +81,10 @@ class ReadingListCard extends StatelessWidget {
                       : const Icon(
                           Icons.favorite_border,
                         ),
-                  onPressed: () {},
+                  onPressed: () =>
+                      widget.book.isFavorite ? removeFromFav() : addToFav(),
                 ),
-                BookRating(score: book.rating),
+                BookRating(score: widget.book.rating),
               ],
             ),
           ),
@@ -90,13 +106,13 @@ class ReadingListCard extends StatelessWidget {
                         style: const TextStyle(color: kBlackColor),
                         children: [
                           TextSpan(
-                            text: "${book.title}\n",
+                            text: "${widget.book.title}\n",
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           TextSpan(
-                            text: book.author,
+                            text: widget.book.author,
                             style: const TextStyle(
                               color: kLightBlackColor,
                             ),
@@ -111,7 +127,7 @@ class ReadingListCard extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: GestureDetector(
-                          onTap: pressDetails,
+                          onTap: widget.pressDetails,
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.center,
@@ -122,7 +138,7 @@ class ReadingListCard extends StatelessWidget {
                       Expanded(
                         child: TwoSideRoundedButton(
                           text: "Read",
-                          press: () => pressRead,
+                          press: () => widget.pressRead,
                         ),
                       )
                     ],

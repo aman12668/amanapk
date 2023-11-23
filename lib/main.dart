@@ -3,6 +3,7 @@ import 'package:ENEB_HUB/app/screens/main/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:ENEB_HUB/app/screens/main/screens/drawer/widget/navigation_drawer_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'dart:io';
@@ -44,7 +45,7 @@ Future<void> main() async {
     }
   });
 
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

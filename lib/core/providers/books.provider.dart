@@ -3,16 +3,16 @@ import 'package:ENEB_HUB/core/Database/books.service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
-class ProductsNotifier extends ChangeNotifier {
-  late List<Book> books;
+class BooksNotifier extends ChangeNotifier {
+  List<BooksList>? books;
 
-  getBooks() async {
+  Future<void> getBooks() async {
     try {
-      final result = await BookService().getBooks();
+      final result = await BookService().getBooksByCategory();
       books = result;
       notifyListeners();
     } catch (e) {
-      print(e);
+      //...
     } finally {
       // ...
     }
@@ -20,10 +20,16 @@ class ProductsNotifier extends ChangeNotifier {
 
   addToFavorite(
     Book book,
+  ) async {
+    // await BookService().addToFavorite(book);
+  }
+
+  removeFromFavorite(
+    Book book,
   ) {
     //...
   }
 }
 
-final productsProvider =
-    ChangeNotifierProvider<ProductsNotifier>((ref) => ProductsNotifier());
+final booksProvider =
+    ChangeNotifierProvider<BooksNotifier>((ref) => BooksNotifier());
