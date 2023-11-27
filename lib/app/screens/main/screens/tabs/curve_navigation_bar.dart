@@ -1,4 +1,5 @@
 import 'package:ENEB_HUB/app/screens/main/screens/drawer/page/favourites_page.dart';
+import 'package:ENEB_HUB/app/screens/main/screens/drawer/widget/navigation_drawer_widget.dart';
 import 'package:ENEB_HUB/app/screens/main/screens/tabs/favourate_page.dart';
 import 'package:ENEB_HUB/app/screens/main/screens/tabs/profile_page.dart';
 import 'package:ENEB_HUB/app/screens/main/screens/tabs/search_page.dart';
@@ -43,6 +44,7 @@ class _TabsState extends State<Tabs> {
     ];
     return Scaffold(
       backgroundColor: Colors.white,
+      drawer: const MenuScreenPage(),
       extendBody: true,
       body: IndexedStack(
         children: [screen[index]],
@@ -155,7 +157,7 @@ class _TabsState extends State<Tabs> {
             children: [
               IconButton(
                 icon: Icon(
-                  Icons.grid_view_rounded,
+                  Icons.notification_important_rounded,
                   color: index == 3 ? Colors.black : Colors.grey,
                 ),
                 onPressed: () => onPageChange(3),

@@ -26,7 +26,7 @@ class _ImageSliderFirebaseState extends State<ImageSliderFirebase> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 245,
+      height: 150,
       width: double.infinity,
       child: StreamBuilder<QuerySnapshot>(
         stream: imageStream,
@@ -38,7 +38,7 @@ class _ImageSliderFirebaseState extends State<ImageSliderFirebase> {
                 itemBuilder: (_, index, ___) {
                   DocumentSnapshot sliderImage = snapshot.data!.docs[index];
                   return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(29),
                       boxShadow: [
@@ -63,7 +63,7 @@ class _ImageSliderFirebaseState extends State<ImageSliderFirebase> {
                   enlargeCenterPage: true,
                   autoPlayInterval: const Duration(seconds: 6),
                   disableCenter: true,
-                  viewportFraction: 0.6,
+                  viewportFraction: 1,
                   pageSnapping: true,
                   clipBehavior: Clip.none,
                   enlargeStrategy: CenterPageEnlargeStrategy.zoom,

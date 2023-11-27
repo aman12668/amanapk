@@ -1,5 +1,6 @@
 import 'package:ENEB_HUB/core/Controllers/Models/book_model.dart';
 import 'package:ENEB_HUB/core/Database/books.service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,8 @@ class BooksNotifier extends ChangeNotifier {
     try {
       final result = await BookService().getBooksByCategory();
       books = result;
+
+      print('🔴, ${books}');
       notifyListeners();
     } catch (e) {
       //...
@@ -28,6 +31,13 @@ class BooksNotifier extends ChangeNotifier {
     Book book,
   ) {
     //...
+  }
+
+  get categories {
+    final result = books?.map((book) => book.category).toList() ?? [];
+    notifyListeners();
+
+    return result;
   }
 }
 
