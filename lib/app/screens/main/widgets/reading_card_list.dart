@@ -24,12 +24,8 @@ class ReadingListCard extends ConsumerStatefulWidget {
 }
 
 class _ReadingListCardState extends ConsumerState<ReadingListCard> {
-  void addToFav() async {
-    await ref.read(booksProvider.notifier).addToFavorite(widget.book);
-  }
-
-  void removeFromFav() async {
-    await ref.read(booksProvider.notifier).removeFromFavorite(widget.book);
+  void favToggle() async {
+    await ref.read(booksProvider.notifier).toggleFavorite(widget.book);
   }
 
   @override
@@ -81,8 +77,7 @@ class _ReadingListCardState extends ConsumerState<ReadingListCard> {
                       : const Icon(
                           Icons.favorite_border,
                         ),
-                  onPressed: () =>
-                      widget.book.isFavorite ? removeFromFav() : addToFav(),
+                  onPressed: () => favToggle(),
                 ),
                 BookRating(score: widget.book.rating),
               ],

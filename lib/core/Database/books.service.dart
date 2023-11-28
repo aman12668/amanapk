@@ -11,6 +11,9 @@ class BookService {
   final CollectionReference booksCollection =
       FirebaseFirestore.instance.collection('books');
 
+  final CollectionReference categoriesCollection =
+      FirebaseFirestore.instance.collection('categories');
+
   Future<List<Book>> getBooks() async {
     QuerySnapshot querySnapshot = await booksCollection.get();
 
@@ -18,6 +21,7 @@ class BookService {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       // print('🔥 ${data['category']['id']}');
       return Book(
+        id: data['id'],
         title: data['title'],
         rating: data['rating'],
         description: data['description'],
@@ -35,6 +39,16 @@ class BookService {
           );
         }).toList(),
       );
+    }).toList();
+  }
+
+  Future<List<Category>> getCategories() async {
+    QuerySnapshot querySnapshot = await categoriesCollection.get();
+
+    return querySnapshot.docs.map((doc) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      // print('🔥 ${data['category']['id']}');
+      return Category(id: data['id'], name: data['name']);
     }).toList();
   }
 
@@ -62,6 +76,59 @@ class BookService {
   }
 
   Future<void> addCategoryDocument() async {
+    CollectionReference categoriesCollection =
+        FirebaseFirestore.instance.collection('categories');
+
+    // List of categories
+    List<String> categoryList = [
+      'Social Studies',
+      'व्याकरण',
+      'Zoology',
+      'Grammer',
+      'Exam Practice Set',
+      'Physics',
+      'English',
+      'Accounting',
+      'Advanced Level Physics',
+      'Important Conversions',
+      'Chemistry',
+      'VIP Series',
+      'Botany',
+      'All Projects',
+      'Practical Files',
+      'Economics',
+      'Past Paper Solutions',
+      'Olympiad Questions',
+      'Homework',
+      'Mathematics',
+      'H.C. Verma Physics',
+      'Exam Questions',
+      'Physics Numericals',
+      'Computer Science',
+      'नेपाली',
+      'Exam Probable MCQs',
+      'Old Is Gold Solution',
+      'Olympiad Resources',
+      'Diagrammatic Questions',
+      'Technical Stream',
+      'University Physics',
+      'Featured'
+    ];
+
+    // Generate a random id and select a random category name
+    // String randomlyGeneratedId = generateRandomId();
+    // String randomlySelectedCategory = getRandomCategory(categoryList);
+
+    // Add the document to the collection
+    for (var element in categoryList) {
+      await categoriesCollection.add({
+        'id': const Uuid().v4(),
+        'name': element,
+      });
+    }
+  }
+
+  Future<void> addStudyLevelDocument() async {
     CollectionReference categoriesCollection =
         FirebaseFirestore.instance.collection('categories');
 
@@ -159,22 +226,65 @@ class BookService {
   Future<List<BooksList>> getBooksByCategory() async {
     List<Book> allBooks = await getBooks();
 
-    Map<Category, List<Book>> booksByCategory = {};
+    Map<String, List<Book>> groupedBooks = {};
 
-    for (var book in allBooks) {
-      print('🔥 ${book}');
-      if (booksByCategory.containsKey(book.category.id)) {
-        booksByCategory[book.category]!.add(book);
-      } else {
-        booksByCategory[book.category] = [book];
+    // Group books by category
+    for (Book book in allBooks) {
+      String categoryId = book.category.id;
+
+      if (!groupedBooks.containsKey(categoryId)) {
+        groupedBooks[categoryId] = [];
+      }
+
+      groupedBooks[categoryId]!.add(book);
+    }
+
+    // Create BooksList objects from the grouped books
+    List<BooksList> result = [];
+
+    for (MapEntry<String, List<Book>> entry in groupedBooks.entries) {
+      String categoryId = entry.key;
+      List<Book> categoryBooks = entry.value;
+
+      String categoryName = await getCategoryNameById(categoryId);
+
+      result.add(BooksList(
+        category: Category(id: categoryId, name: categoryName),
+        books: categoryBooks,
+      ));
+    }
+
+    return result;
+  }
+
+// Replace this method with your logic to get the category name based on the ID
+  Future<String> getCategoryNameById(String categoryId) async {
+    // Implement your logic to get the category name based on the ID
+
+    final categories = await getCategories();
+
+    try {
+      return categories.firstWhere((cat) => cat.id == categoryId).name;
+    } catch (e) {
+      // Handle the case where the category is not found
+      return 'Unknown Category';
+    }
+  }
+
+  List<Book> findUniqueItemsByCategory(List<Book> books) {
+    Set<String> uniqueCategories = <String>{};
+    List<Book> uniqueItems = [];
+
+    for (Book book in books) {
+      String categoryId = book.category.id;
+
+      if (!uniqueCategories.contains(categoryId)) {
+        uniqueCategories.add(categoryId);
+        uniqueItems.add(book);
       }
     }
 
-    List<BooksList> result = booksByCategory.entries.map((entry) {
-      return BooksList(category: entry.key, books: entry.value);
-    }).toList();
-
-    return result;
+    return uniqueItems;
   }
 
   Future<List<Book>> getFavoriteBooks() async {
@@ -183,7 +293,23 @@ class BookService {
     return result;
   }
 
-  addToFavorite(String id, bool isFavorite) async {
-    await booksCollection.doc(id).update({'is_favorite': isFavorite});
+  toggleFavorite(String bookId, bool isFavorite) async {
+    try {
+      QuerySnapshot querySnapshot =
+          await booksCollection.where('id', isEqualTo: bookId).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        // If there are matching documents, update the first one (you might need to handle multiple matches differently)
+        String documentId = querySnapshot.docs[0].id;
+        await booksCollection
+            .doc(documentId)
+            .update({'is_favorite': isFavorite});
+      } else {
+        // Handle the case where no matching documents were found
+        print('No document found with bookId $bookId.');
+      }
+    } catch (e) {
+      print('Error updating is_favorite field: $e');
+    }
   }
 }

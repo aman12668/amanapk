@@ -1,4 +1,5 @@
 class Book {
+  String id;
   String title;
   double rating;
   String description;
@@ -9,6 +10,7 @@ class Book {
   Category category;
   String studyLevel;
   Book({
+    required this.id,
     required this.title,
     required this.rating,
     required this.description,

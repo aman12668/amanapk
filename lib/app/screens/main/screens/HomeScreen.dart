@@ -241,82 +241,83 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget buildCategoryButtons(BuildContext ctx) {
     final categoryList = ref.watch(booksProvider).categories;
 
-    return FutureBuilder(
-      future: _booksFutre,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            (categoryList.isEmpty)) {
-          return Container(
-            height: 30,
-            margin: const EdgeInsets.only(top: 24),
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              separatorBuilder: (context, index) => const SizedBox(width: 10),
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 233, 233, 233),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Text(
-                      'English',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        } else {
-          return Container(
-            height: 30,
-            margin: const EdgeInsets.only(top: 24),
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: categoryList.length,
-              clipBehavior: Clip.none,
-              separatorBuilder: (context, index) => const SizedBox(width: 10),
-              itemBuilder: (context, index) {
-                final cat = categoryList[index];
-                print(categoryList.toString());
-                return GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 233, 233, 233),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Text(
-                      cat,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        }
-      },
-    );
+    return Text('ce');
+    // return FutureBuilder(
+    //   future: _booksFutre,
+    //   builder: (context, snapshot) {
+    //     if (snapshot.connectionState == ConnectionState.waiting ||
+    //         (categoryList.isEmpty)) {
+    //       return Container(
+    //         height: 30,
+    //         margin: const EdgeInsets.only(top: 24),
+    //         child: ListView.separated(
+    //           padding: const EdgeInsets.symmetric(horizontal: 24),
+    //           shrinkWrap: true,
+    //           scrollDirection: Axis.horizontal,
+    //           itemCount: 10,
+    //           separatorBuilder: (context, index) => const SizedBox(width: 10),
+    //           itemBuilder: (context, index) {
+    //             return GestureDetector(
+    //               onTap: () {},
+    //               child: Container(
+    //                 alignment: Alignment.center,
+    //                 padding:
+    //                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+    //                 decoration: BoxDecoration(
+    //                   color: const Color.fromARGB(255, 233, 233, 233),
+    //                   borderRadius: BorderRadius.circular(16),
+    //                 ),
+    //                 child: const Text(
+    //                   'English',
+    //                   style: TextStyle(
+    //                     fontSize: 12,
+    //                     color: Colors.black87,
+    //                   ),
+    //                 ),
+    //               ),
+    //             );
+    //           },
+    //         ),
+    //       );
+    //     } else {
+    //       return Container(
+    //         height: 30,
+    //         margin: const EdgeInsets.only(top: 24),
+    //         child: ListView.separated(
+    //           padding: const EdgeInsets.symmetric(horizontal: 24),
+    //           shrinkWrap: true,
+    //           scrollDirection: Axis.horizontal,
+    //           itemCount: categoryList.length,
+    //           clipBehavior: Clip.none,
+    //           separatorBuilder: (context, index) => const SizedBox(width: 10),
+    //           itemBuilder: (context, index) {
+    //             final cat = categoryList[index];
+    //             print(categoryList.toString());
+    //             return GestureDetector(
+    //               onTap: () {},
+    //               child: Container(
+    //                 alignment: Alignment.center,
+    //                 padding:
+    //                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+    //                 decoration: BoxDecoration(
+    //                   color: const Color.fromARGB(255, 233, 233, 233),
+    //                   borderRadius: BorderRadius.circular(16),
+    //                 ),
+    //                 child: Text(
+    //                   cat,
+    //                   style: const TextStyle(
+    //                     fontSize: 12,
+    //                     color: Colors.black87,
+    //                   ),
+    //                 ),
+    //               ),
+    //             );
+    //           },
+    //         ),
+    //       );
+    //     }
+    //   },
+    // );
   }
 
   Widget buildBooksList(BuildContext context) {
