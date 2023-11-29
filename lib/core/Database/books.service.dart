@@ -14,12 +14,15 @@ class BookService {
   final CollectionReference categoriesCollection =
       FirebaseFirestore.instance.collection('categories');
 
+  final CollectionReference studyLevelCollection =
+      FirebaseFirestore.instance.collection('study_levels');
+
   Future<List<Book>> getBooks() async {
     QuerySnapshot querySnapshot = await booksCollection.get();
 
     return querySnapshot.docs.map((doc) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      // print('🔥 ${data['category']['id']}');
+      // print('🔥 ${data['study_level']}');
       return Book(
         id: data['id'],
         title: data['title'],
@@ -30,7 +33,8 @@ class BookService {
         author: data['author'],
         category: Category(
             id: data['category']['id'], name: data['category']['name']),
-        studyLevel: data['study_level'],
+        studyLevel: StudyLevel(
+            id: data['study_level']['id'], name: data['study_level']['name']),
         chapters: (data['chapters'] as List<dynamic>).map((chapter) {
           return Chapter(
             title: chapter['title'],
@@ -49,6 +53,16 @@ class BookService {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       // print('🔥 ${data['category']['id']}');
       return Category(id: data['id'], name: data['name']);
+    }).toList();
+  }
+
+  Future<List<StudyLevel>> getStudyLevels() async {
+    QuerySnapshot querySnapshot = await studyLevelCollection.get();
+
+    return querySnapshot.docs.map((doc) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      // print('🔥 ${data['category']['id']}');
+      return StudyLevel(id: data['id'], name: data['name']);
     }).toList();
   }
 
@@ -75,97 +89,70 @@ class BookService {
     return const Uuid().v4();
   }
 
-  Future<void> addCategoryDocument() async {
-    CollectionReference categoriesCollection =
-        FirebaseFirestore.instance.collection('categories');
+  // Future<void> addCategoryDocument() async {
+  //   CollectionReference categoriesCollection =
+  //       FirebaseFirestore.instance.collection('categories');
 
-    // List of categories
-    List<String> categoryList = [
-      'Social Studies',
-      'व्याकरण',
-      'Zoology',
-      'Grammer',
-      'Exam Practice Set',
-      'Physics',
-      'English',
-      'Accounting',
-      'Advanced Level Physics',
-      'Important Conversions',
-      'Chemistry',
-      'VIP Series',
-      'Botany',
-      'All Projects',
-      'Practical Files',
-      'Economics',
-      'Past Paper Solutions',
-      'Olympiad Questions',
-      'Homework',
-      'Mathematics',
-      'H.C. Verma Physics',
-      'Exam Questions',
-      'Physics Numericals',
-      'Computer Science',
-      'नेपाली',
-      'Exam Probable MCQs',
-      'Old Is Gold Solution',
-      'Olympiad Resources',
-      'Diagrammatic Questions',
-      'Technical Stream',
-      'University Physics',
-      'Featured'
-    ];
+  //   // List of categories
+  //   List<String> categoryList = [
+  //     'Social Studies',
+  //     'व्याकरण',
+  //     'Zoology',
+  //     'Grammer',
+  //     'Exam Practice Set',
+  //     'Physics',
+  //     'English',
+  //     'Accounting',
+  //     'Advanced Level Physics',
+  //     'Important Conversions',
+  //     'Chemistry',
+  //     'VIP Series',
+  //     'Botany',
+  //     'All Projects',
+  //     'Practical Files',
+  //     'Economics',
+  //     'Past Paper Solutions',
+  //     'Olympiad Questions',
+  //     'Homework',
+  //     'Mathematics',
+  //     'H.C. Verma Physics',
+  //     'Exam Questions',
+  //     'Physics Numericals',
+  //     'Computer Science',
+  //     'नेपाली',
+  //     'Exam Probable MCQs',
+  //     'Old Is Gold Solution',
+  //     'Olympiad Resources',
+  //     'Diagrammatic Questions',
+  //     'Technical Stream',
+  //     'University Physics',
+  //     'Featured'
+  //   ];
 
-    // Generate a random id and select a random category name
-    // String randomlyGeneratedId = generateRandomId();
-    // String randomlySelectedCategory = getRandomCategory(categoryList);
+  //   // Generate a random id and select a random category name
+  //   // String randomlyGeneratedId = generateRandomId();
+  //   // String randomlySelectedCategory = getRandomCategory(categoryList);
 
-    // Add the document to the collection
-    for (var element in categoryList) {
-      await categoriesCollection.add({
-        'id': const Uuid().v4(),
-        'name': element,
-      });
-    }
-  }
+  //   // Add the document to the collection
+  //   for (var element in categoryList) {
+  //     await categoriesCollection.add({
+  //       'id': const Uuid().v4(),
+  //       'name': element,
+  //     });
+  //   }
+  // }
 
   Future<void> addStudyLevelDocument() async {
     CollectionReference categoriesCollection =
-        FirebaseFirestore.instance.collection('categories');
+        FirebaseFirestore.instance.collection('study_levels');
 
     // List of categories
-    List<String> categoryList = [
-      'Social Studies',
-      'व्याकरण',
-      'Zoology',
-      'Grammer',
-      'Exam Practice Set',
-      'Physics',
-      'English',
-      'Accounting',
-      'Advanced Level Physics',
-      'Important Conversions',
-      'Chemistry',
-      'VIP Series',
-      'Botany',
-      'All Projects',
-      'Practical Files',
-      'Economics',
-      'Past Paper Solutions',
-      'Olympiad Questions',
-      'Homework',
-      'Mathematics',
-      'H.C. Verma Physics',
-      'Exam Questions',
-      'Physics Numericals',
-      'Computer Science',
-      'नेपाली',
-      'Exam Probable MCQs',
-      'Old Is Gold Solution',
-      'Olympiad Resources',
-      'Diagrammatic Questions',
-      'Technical Stream',
-      'University Physics',
-      'Featured'
+    List<String> arr = [
+      'See',
+      'Class 11',
+      'Class 12',
+      'Ioe',
+      'Iom',
     ];
 
     // Generate a random id and select a random category name
@@ -173,7 +160,7 @@ class BookService {
     // String randomlySelectedCategory = getRandomCategory(categoryList);
 
     // Add the document to the collection
-    for (var element in categoryList) {
+    for (var element in arr) {
       await categoriesCollection.add({
         'id': const Uuid().v4(),
         'name': element,
@@ -187,8 +174,13 @@ class BookService {
   }
 
 // Function to get a random category from the list
-  String getRandomCategory(List<String> categoryList) {
+  Category getRandomCategory(List<Category> categoryList) {
     return categoryList[Random().nextInt(categoryList.length)];
+  }
+
+// Function to get a random StudyLevel from the list
+  StudyLevel getRandomStudyLevel(List<StudyLevel> studyLevelList) {
+    return studyLevelList[Random().nextInt(studyLevelList.length)];
   }
 
   Future<void> updateBooksCategoryField() async {
@@ -220,6 +212,53 @@ class BookService {
           });
         }
       });
+    }
+  }
+
+  Future<void> updateDocumentsWithRandomCategory() async {
+    try {
+      // Step 1: Retrieve all documents from the collection
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('books').get();
+
+      // Step 2: Get the list of categories
+      List<Category> categories = await getCategories();
+
+      // Step 3: Update each document with a randomly selected category
+      for (QueryDocumentSnapshot document in querySnapshot.docs) {
+        Category randomCategory = getRandomCategory(categories);
+        await document.reference.update({'category': randomCategory});
+      }
+
+      print('Documents updated successfully.');
+    } catch (e) {
+      print('Error updating documents: $e');
+    }
+  }
+
+  Future<void> updateDocumentsWithRandomStudyLevel() async {
+    try {
+      // Step 1: Retrieve all documents from the collection
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('books').get();
+
+      // Step 2: Get the list of categories
+      List<StudyLevel> studyLevels = await getStudyLevels();
+
+      // Step 3: Update each document with a randomly selected category
+      for (QueryDocumentSnapshot document in querySnapshot.docs) {
+        StudyLevel randomCategory = getRandomStudyLevel(studyLevels);
+
+        print('🔴, ${randomCategory}');
+
+        await document.reference.update({
+          'study_level': {"id": randomCategory.id, "name": randomCategory.name}
+        });
+      }
+
+      print('Documents updated successfully.');
+    } catch (e) {
+      print('Error updating documents: $e');
     }
   }
 

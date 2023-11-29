@@ -24,8 +24,11 @@ class ReadingListCard extends ConsumerStatefulWidget {
 }
 
 class _ReadingListCardState extends ConsumerState<ReadingListCard> {
-  void favToggle() async {
-    await ref.read(booksProvider.notifier).toggleFavorite(widget.book);
+  void favToggle() {
+    setState(() {
+      widget.book.isFavorite = !widget.book.isFavorite;
+    });
+    ref.read(booksProvider.notifier).toggleFavorite(widget.book);
   }
 
   @override

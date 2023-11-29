@@ -8,7 +8,7 @@ class Book {
   List<Chapter> chapters;
   String author;
   Category category;
-  String studyLevel;
+  StudyLevel studyLevel;
   Book({
     required this.id,
     required this.title,
@@ -37,6 +37,13 @@ class Category {
   String name;
 
   Category({required this.id, required this.name});
+}
+
+class StudyLevel {
+  String id;
+  String name;
+
+  StudyLevel({required this.id, required this.name});
 }
 
 class Chapter {

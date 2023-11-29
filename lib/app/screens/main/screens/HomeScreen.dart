@@ -69,7 +69,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<void> loadBooks() async {
     await ref.read(booksProvider.notifier).getBooks();
-    // await BookService().updateBooksCategoryField();
+    // await BookService().updateDocumentsWithRandomStudyLevel();
   }
 
   @override

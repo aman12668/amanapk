@@ -28,6 +28,7 @@ class BooksNotifier extends ChangeNotifier {
     book_model.Book book,
   ) async {
     await BookService().toggleFavorite(book.id, book.isFavorite ? false : true);
+    getBooks();
     notifyListeners();
   }
 
@@ -37,17 +38,17 @@ class BooksNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  getStudyLevel() async {
-    final result = books?.map((book) {
-      return book.books.map((e) => e.studyLevel).toList();
-    }).toList();
+  // getStudyLevel() async {
+  //   final result = books?.map((book) {
+  //     return book.books.map((e) => e.studyLevel).toList();
+  //   }).toList();
 
-    // Flatten the nested structure
+  //   // Flatten the nested structure
 
-    print('result 🔥 ${result}');
-    // categories = result;
-    notifyListeners();
-  }
+  //   print('result 🔥 ${result}');
+  //   // categories = result;
+  //   notifyListeners();
+  // }
 }
 
 final booksProvider =
