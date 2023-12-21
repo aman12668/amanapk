@@ -1,6 +1,6 @@
+import 'package:ENEB_HUB/app/widgets/fallback_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_controller.dart';
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ENEB_HUB/app/widgets/consttants.dart';
@@ -50,9 +50,11 @@ class _ImageSliderFirebaseState extends State<ImageSliderFirebase> {
                       ],
                     ),
                     clipBehavior: Clip.hardEdge,
-                    child: Image.network(
-                      sliderImage['img'],
+                    child: CachedNetworkImage(
+                      imageUrl: sliderImage['img'],
                       fit: BoxFit.cover,
+                      errorWidget: (context, url, error) =>
+                          const FallBackImage(),
                     ),
                   );
                 },
@@ -75,7 +77,7 @@ class _ImageSliderFirebaseState extends State<ImageSliderFirebase> {
                 ));
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator.adaptive(),
             );
           }
         },

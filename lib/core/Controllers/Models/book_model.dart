@@ -32,18 +32,18 @@ class BooksList {
   });
 }
 
-class Category {
-  String id;
-  String name;
-
-  Category({required this.id, required this.name});
-}
-
 class StudyLevel {
   String id;
   String name;
 
   StudyLevel({required this.id, required this.name});
+}
+
+class Category {
+  String id;
+  String name;
+
+  Category({required this.id, required this.name});
 }
 
 class Chapter {

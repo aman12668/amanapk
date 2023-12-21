@@ -2,8 +2,10 @@ import 'package:ENEB_HUB/app/Widgets/consttants.dart';
 
 import 'package:ENEB_HUB/app/screens/main/widgets/book_rating.dart';
 import 'package:ENEB_HUB/app/screens/main/widgets/two_side_rounded_button.dart';
+import 'package:ENEB_HUB/app/widgets/fallback_image.dart';
 import 'package:ENEB_HUB/core/Controllers/Models/book_model.dart';
 import 'package:ENEB_HUB/core/providers/books.provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -59,11 +61,12 @@ class _ReadingListCardState extends ConsumerState<ReadingListCard> {
           ),
           Positioned(
             top: 0,
-            child: Image.network(
-              widget.book.cover,
+            child: CachedNetworkImage(
+              imageUrl: widget.book.cover,
               width: 150,
               height: 150,
               fit: BoxFit.cover,
+              errorWidget: (context, url, error) => FallBackImage(),
             ),
           ),
           Positioned(

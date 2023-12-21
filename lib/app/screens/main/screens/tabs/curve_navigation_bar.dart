@@ -44,8 +44,8 @@ class _TabsState extends State<Tabs> {
     ];
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: const MenuScreenPage(),
       extendBody: true,
+      drawer: const MenuScreenPage(),
       body: IndexedStack(
         children: [screen[index]],
       ),

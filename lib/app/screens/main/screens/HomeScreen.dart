@@ -15,6 +15,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:ENEB_HUB/app/Widgets/consttants.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 
 import '../../../../core/Controllers/Models/book_model.dart';
 import 'drawer/widget/navigation_drawer_widget.dart';
@@ -69,14 +71,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<void> loadBooks() async {
     await ref.read(booksProvider.notifier).getBooks();
-    // await BookService().updateDocumentsWithRandomStudyLevel();
+    await ref.read(booksProvider.notifier).getStudyLevel();
   }
+
+  final GlobalKey _scaffoldState = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      // drawer: NavigationDrawerWidget(),
+      key: _scaffoldState,
+      appBar: AppBar(
+        title: const Text('Goood Afternoon, Samir'),
+        leading: Container(
+          child: IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: const Icon(Icons.menu),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: Column(
@@ -94,7 +109,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: size.height * .1),
+                  SizedBox(height: size.height * .02),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: RichText(
@@ -239,85 +254,117 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget buildCategoryButtons(BuildContext ctx) {
-    final categoryList = ref.watch(booksProvider).categories;
+    final studyLevelList = ref.watch(booksProvider).studyLevelList;
 
-    return Text('ce');
-    // return FutureBuilder(
-    //   future: _booksFutre,
-    //   builder: (context, snapshot) {
-    //     if (snapshot.connectionState == ConnectionState.waiting ||
-    //         (categoryList.isEmpty)) {
-    //       return Container(
-    //         height: 30,
-    //         margin: const EdgeInsets.only(top: 24),
-    //         child: ListView.separated(
-    //           padding: const EdgeInsets.symmetric(horizontal: 24),
-    //           shrinkWrap: true,
-    //           scrollDirection: Axis.horizontal,
-    //           itemCount: 10,
-    //           separatorBuilder: (context, index) => const SizedBox(width: 10),
-    //           itemBuilder: (context, index) {
-    //             return GestureDetector(
-    //               onTap: () {},
-    //               child: Container(
-    //                 alignment: Alignment.center,
-    //                 padding:
-    //                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-    //                 decoration: BoxDecoration(
-    //                   color: const Color.fromARGB(255, 233, 233, 233),
-    //                   borderRadius: BorderRadius.circular(16),
-    //                 ),
-    //                 child: const Text(
-    //                   'English',
-    //                   style: TextStyle(
-    //                     fontSize: 12,
-    //                     color: Colors.black87,
-    //                   ),
-    //                 ),
-    //               ),
-    //             );
-    //           },
-    //         ),
-    //       );
-    //     } else {
-    //       return Container(
-    //         height: 30,
-    //         margin: const EdgeInsets.only(top: 24),
-    //         child: ListView.separated(
-    //           padding: const EdgeInsets.symmetric(horizontal: 24),
-    //           shrinkWrap: true,
-    //           scrollDirection: Axis.horizontal,
-    //           itemCount: categoryList.length,
-    //           clipBehavior: Clip.none,
-    //           separatorBuilder: (context, index) => const SizedBox(width: 10),
-    //           itemBuilder: (context, index) {
-    //             final cat = categoryList[index];
-    //             print(categoryList.toString());
-    //             return GestureDetector(
-    //               onTap: () {},
-    //               child: Container(
-    //                 alignment: Alignment.center,
-    //                 padding:
-    //                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-    //                 decoration: BoxDecoration(
-    //                   color: const Color.fromARGB(255, 233, 233, 233),
-    //                   borderRadius: BorderRadius.circular(16),
-    //                 ),
-    //                 child: Text(
-    //                   cat,
-    //                   style: const TextStyle(
-    //                     fontSize: 12,
-    //                     color: Colors.black87,
-    //                   ),
-    //                 ),
-    //               ),
-    //             );
-    //           },
-    //         ),
-    //       );
-    //     }
-    //   },
-    // );
+    // return Text('test');
+    return FutureBuilder(
+      future: _booksFutre,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            (studyLevelList!.isEmpty)) {
+          return Container(
+            height: 30,
+            margin: const EdgeInsets.only(top: 24),
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: 10,
+              separatorBuilder: (context, index) => const SizedBox(width: 10),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 233, 233, 233),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: const Text(
+                      'English',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        } else {
+          return Container(
+            height: 30,
+            margin: const EdgeInsets.only(top: 24),
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 24),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      ref.watch(booksProvider).filterBooksByStudyLevel('All');
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 242, 242, 242),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Text(
+                        'All',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: studyLevelList.length,
+                    clipBehavior: Clip.none,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 10),
+                    itemBuilder: (contdext, index) {
+                      StudyLevel cat = studyLevelList[index];
+
+                      return GestureDetector(
+                        onTap: () {
+                          ref.watch(booksProvider).filterBooksByStudyLevel(cat);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 242, 242, 242),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            cat.name.toString(),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+      },
+    );
   }
 
   Widget buildBooksList(BuildContext context) {
@@ -355,7 +402,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             padding: const EdgeInsets.all(0).copyWith(bottom: 40, top: 40),
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
-              BooksList books = booksList![index];
+              BooksList books = booksList[index];
               return SizedBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
