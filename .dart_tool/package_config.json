@@ -362,6 +362,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_sticky_widgets",
+      "rootUri": "file:///Users/developer/.pub-cache/hosted/pub.dev/flutter_sticky_widgets-0.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/developer/development/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -746,6 +752,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "sticky_headers",
+      "rootUri": "file:///Users/developer/.pub-cache/hosted/pub.dev/sticky_headers-0.3.0+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "stream_channel",
       "rootUri": "file:///Users/developer/.pub-cache/hosted/pub.dev/stream_channel-2.1.1",
       "packageUri": "lib/",
@@ -962,7 +974,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-11-20T11:56:30.143485Z",
+  "generated": "2023-12-22T11:04:18.511456Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }

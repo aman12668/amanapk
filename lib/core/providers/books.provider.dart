@@ -13,7 +13,7 @@ class BooksNotifier extends ChangeNotifier {
 
   List<book_model.StudyLevel>? studyLevelList;
 
-  book_model.StudyLevel? selectedStudyLevel;
+  dynamic selectedStudyLevel = 'All';
 
   Future<void> getBooks() async {
     try {
@@ -55,20 +55,18 @@ class BooksNotifier extends ChangeNotifier {
 
     final List<book_model.BooksList>? result;
     if (studyLevel is book_model.StudyLevel) {
-      result = books?.map((book_model.BooksList booksList) {
-        return book_model.BooksList(
-          category: booksList.category,
-          books: booksList.books
-              .where((book) => book.studyLevel.id == studyLevel.id)
-              .toList(),
-        );
-      }).toList();
+      result = books
+          ?.map((book_model.BooksList booksList) {
+            return book_model.BooksList(
+              category: booksList.category,
+              books: booksList.books
+                  .where((book) => book.studyLevel.id == studyLevel.id)
+                  .toList(),
+            );
+          })
+          .where((book_model.BooksList booksList) => booksList.books.isNotEmpty)
+          .toList();
       books = result;
-    }
-
-    if (studyLevel is String) {
-      // books;
-      print(studyLevel);
     }
 
     // Update the 'books' property of the current object

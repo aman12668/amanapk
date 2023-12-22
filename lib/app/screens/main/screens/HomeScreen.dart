@@ -17,9 +17,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ENEB_HUB/app/Widgets/consttants.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:sticky_headers/sticky_headers/widget.dart';
 
 import '../../../../core/Controllers/Models/book_model.dart';
 import 'drawer/widget/navigation_drawer_widget.dart';
+import 'package:flutter_sticky_widgets/flutter_sticky_widgets.dart';
 
 extension StringExtension on String {
   String capitalize() {
@@ -62,16 +65,25 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   late Future<void> _booksFutre;
+  late ScrollController _categoriesScrollcontroller;
 
   @override
   void initState() {
     _booksFutre = loadBooks();
+    _categoriesScrollcontroller = ScrollController();
+
     super.initState();
   }
 
   Future<void> loadBooks() async {
     await ref.read(booksProvider.notifier).getBooks();
     await ref.read(booksProvider.notifier).getStudyLevel();
+  }
+
+  @override
+  void dispose() {
+    _categoriesScrollcontroller.dispose();
+    super.dispose();
   }
 
   final GlobalKey _scaffoldState = GlobalKey();
@@ -93,161 +105,155 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                  // image: DecorationImage(
-                  //   image: AssetImage("assets/images/main_page_bg.png"),
-                  //   alignment: Alignment.topCenter,
-                  //   fit: BoxFit.fitWidth,
-                  // ),
+        child: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+              // image: DecorationImage(
+              //   image: AssetImage("assets/images/main_page_bg.png"),
+              //   alignment: Alignment.topCenter,
+              //   fit: BoxFit.fitWidth,
+              // ),
+              ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: size.height * .02),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: RichText(
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.headline4,
+                    children: const [
+                      TextSpan(text: "What are you \nLearning "),
+                      TextSpan(
+                          text: "today?",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ))
+                    ],
                   ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: size.height * .02),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: RichText(
+                ),
+              ),
+              const SizedBox(height: 30),
+              const ImageSliderFirebase(),
+              // StickyHeader( controller: _categoriesScrollcontroller,child: ),
+              buildCategoryButtons(context),
+              buildBooksList(context),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    RichText(
                       text: TextSpan(
                         style: Theme.of(context).textTheme.headline4,
                         children: const [
-                          TextSpan(text: "What are you \nLearning "),
+                          TextSpan(text: "Best of the "),
                           TextSpan(
-                              text: "today?",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ))
+                            text: "day",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 30),
-                  const ImageSliderFirebase(),
-                  buildCategoryButtons(context),
-                  buildBooksList(context),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.headline4,
-                            children: const [
-                              TextSpan(text: "Best of the "),
-                              TextSpan(
-                                text: "day",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                    bestOfTheDayCard(size, context),
+                    RichText(
+                      text: TextSpan(
+                        style: Theme.of(context).textTheme.headline4,
+                        children: const [
+                          TextSpan(text: "Continue "),
+                          TextSpan(
+                            text: "reading...",
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        bestOfTheDayCard(size, context),
-                        RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.headline4,
-                            children: const [
-                              TextSpan(text: "Continue "),
-                              TextSpan(
-                                text: "reading...",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Container(
-                          height: 80,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(38.5),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0, 10),
-                                blurRadius: 33,
-                                color: const Color(0xFFD3D3D3).withOpacity(.84),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(38.5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 30, right: 20),
-                                    child: Row(
-                                      children: <Widget>[
-                                        const Expanded(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                "Crushing & Influence",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Text(
-                                                "Unknown",
-                                                style: TextStyle(
-                                                  color: kLightBlackColor,
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment:
-                                                    Alignment.bottomRight,
-                                                child: Text(
-                                                  "Chapter 7 of 10",
-                                                  style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: kLightBlackColor,
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(height: 5),
-                                            ],
-                                          ),
-                                        ),
-                                        Image.asset(
-                                          "assets/images/book-1.png",
-                                          width: 55,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 7,
-                                  width: size.width * .65,
-                                  decoration: BoxDecoration(
-                                    color: kProgressIndicator,
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 80,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(38.5),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 10),
+                            blurRadius: 33,
+                            color: const Color(0xFFD3D3D3).withOpacity(.84),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(38.5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 30, right: 20),
+                                child: Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            "Crushing & Influence",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Unknown",
+                                            style: TextStyle(
+                                              color: kLightBlackColor,
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: Text(
+                                              "Chapter 7 of 10",
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                color: kLightBlackColor,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 5),
+                                        ],
+                                      ),
+                                    ),
+                                    Image.asset(
+                                      "assets/images/book-1.png",
+                                      width: 55,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 7,
+                              width: size.width * .65,
+                              decoration: BoxDecoration(
+                                color: kProgressIndicator,
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -255,6 +261,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget buildCategoryButtons(BuildContext ctx) {
     final studyLevelList = ref.watch(booksProvider).studyLevelList;
+    final selectedButton = ref.watch(booksProvider).selectedStudyLevel;
 
     // return Text('test');
     return FutureBuilder(
@@ -272,15 +279,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               itemCount: 10,
               separatorBuilder: (context, index) => const SizedBox(width: 10),
               itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {},
+                return Shimmer.fromColors(
+                  baseColor: Colors.grey.shade300,
+                  highlightColor: Colors.grey.shade100,
                   child: Container(
                     alignment: Alignment.center,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 233, 233, 233),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Text(
                       'English',
@@ -299,8 +307,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             height: 30,
             margin: const EdgeInsets.only(top: 24),
             padding: const EdgeInsetsDirectional.symmetric(horizontal: 24),
+            clipBehavior: Clip.none,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
+              clipBehavior: Clip.none,
               child: Row(
                 children: [
                   GestureDetector(
@@ -309,18 +319,32 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     },
                     child: Container(
                       alignment: Alignment.center,
+                      clipBehavior: Clip.none,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 242, 242, 242),
+                        color: selectedButton == 'All'
+                            ? Colors.white
+                            : const Color.fromARGB(255, 242, 242, 242),
                         borderRadius: BorderRadius.circular(10),
+                        boxShadow: selectedButton == 'All'
+                            ? [
+                                BoxShadow(
+                                  offset: const Offset(0, 0),
+                                  blurRadius: 33,
+                                  color: kShadowColor,
+                                ),
+                              ]
+                            : null,
                       ),
-                      child: const Text(
+                      child: Text(
                         'All',
                         style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black87,
-                        ),
+                            fontSize: 12,
+                            color: Colors.black87,
+                            fontWeight: selectedButton == 'All'
+                                ? FontWeight.w700
+                                : null),
                       ),
                     ),
                   ),
@@ -343,16 +367,36 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           alignment: Alignment.center,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 4),
+                          clipBehavior: Clip.none,
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 242, 242, 242),
+                            color: (selectedButton != 'All' &&
+                                    selectedButton is StudyLevel &&
+                                    selectedButton.id == cat.id)
+                                ? Colors.white
+                                : const Color.fromARGB(255, 242, 242, 242),
                             borderRadius: BorderRadius.circular(10),
+                            boxShadow: (selectedButton != 'All' &&
+                                    selectedButton is StudyLevel &&
+                                    selectedButton.id == cat.id)
+                                ? [
+                                    BoxShadow(
+                                      offset: const Offset(0, 0),
+                                      blurRadius: 33,
+                                      color: kShadowColor,
+                                    ),
+                                  ]
+                                : null,
                           ),
                           child: Text(
                             cat.name.toString(),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.black87,
-                            ),
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black87,
+                                fontWeight: (selectedButton != 'All' &&
+                                        selectedButton is StudyLevel &&
+                                        selectedButton.id == cat.id)
+                                    ? FontWeight.w700
+                                    : null),
                           ),
                         ),
                       );
@@ -373,8 +417,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return FutureBuilder(
       future: _booksFutre,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            (booksList?.isEmpty ?? true)) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return SizedBox(
             height: 285,
             width: double.infinity,
@@ -392,10 +435,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               },
             ),
           );
+        } else if (snapshot.connectionState == ConnectionState.done &&
+            (booksList?.isEmpty ?? true)) {
+          return const SizedBox(
+            height: 285,
+            child: Center(
+              child: Text('Not Found'),
+            ),
+          );
         } else {
-          return ListView.separated(
+          return ListView.builder(
             itemCount: booksList!.length,
-            separatorBuilder: (context, index) => const SizedBox(height: 24),
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             clipBehavior: Clip.none,
@@ -403,10 +453,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               BooksList books = booksList[index];
-              return SizedBox(
+              return Container(
+                margin: EdgeInsets.only(top: (index == 0) ? 0 : 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Text('${books.books.length}'),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Row(
