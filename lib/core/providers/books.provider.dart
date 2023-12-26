@@ -29,12 +29,23 @@ class BooksNotifier extends ChangeNotifier {
     }
   }
 
-  toggleFavorite(
-    book_model.Book book,
-  ) async {
-    await BookService().toggleFavorite(book.id, book.isFavorite ? false : true);
-    getBooks();
-    notifyListeners();
+  Future<void> toggleFavorite(book_model.Book book) async {
+    try {
+      // Toggle the favorite status locally before updating Firestore
+      book.isFavorite = !book.isFavorite;
+
+      // Update Firestore and wait for the operation to complete
+      await BookService().toggleFavorite(book.id, book.isFavorite);
+
+      // Update the local books list
+      await getBooks();
+
+      // Notify listeners only when the Firestore update is successful
+      notifyListeners();
+    } catch (e) {
+      // Handle errors (e.g., revert local changes, show error message)
+      print('Error toggling favorite: $e');
+    }
   }
 
   getCategories() async {

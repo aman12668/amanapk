@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:uuid/uuid.dart';
 
 import '../Controllers/Models/book_model.dart';
@@ -44,6 +45,23 @@ class BookService {
         }).toList(),
       );
     }).toList();
+  }
+
+  Future<List<BooksList>> getBooksByCategory() async {
+    List<Book> allBooks = await getBooks();
+
+    final groupedBooks = groupBy(allBooks, (Book book) => book.category.id);
+
+    // Transform the grouped map to a list of BooksList
+    final result = groupedBooks.entries
+        .map((entry) => BooksList(
+              category: Category(
+                  id: entry.key, name: entry.value.first.category.name),
+              books: entry.value,
+            ))
+        .toList();
+
+    return result;
   }
 
   Future<List<Category>> getCategories() async {
@@ -262,54 +280,6 @@ class BookService {
     }
   }
 
-  Future<List<BooksList>> getBooksByCategory() async {
-    List<Book> allBooks = await getBooks();
-
-    Map<String, List<Book>> groupedBooks = {};
-
-    // Group books by category
-    for (Book book in allBooks) {
-      String categoryId = book.category.id;
-
-      if (!groupedBooks.containsKey(categoryId)) {
-        groupedBooks[categoryId] = [];
-      }
-
-      groupedBooks[categoryId]!.add(book);
-    }
-
-    // Create BooksList objects from the grouped books
-    List<BooksList> result = [];
-
-    for (MapEntry<String, List<Book>> entry in groupedBooks.entries) {
-      String categoryId = entry.key;
-      List<Book> categoryBooks = entry.value;
-
-      String categoryName = await getCategoryNameById(categoryId);
-
-      result.add(BooksList(
-        category: Category(id: categoryId, name: categoryName),
-        books: categoryBooks,
-      ));
-    }
-
-    return result;
-  }
-
-// Replace this method with your logic to get the category name based on the ID
-  Future<String> getCategoryNameById(String categoryId) async {
-    // Implement your logic to get the category name based on the ID
-
-    final categories = await getCategories();
-
-    try {
-      return categories.firstWhere((cat) => cat.id == categoryId).name;
-    } catch (e) {
-      // Handle the case where the category is not found
-      return 'Unknown Category';
-    }
-  }
-
   List<Book> findUniqueItemsByCategory(List<Book> books) {
     Set<String> uniqueCategories = <String>{};
     List<Book> uniqueItems = [];
@@ -343,6 +313,8 @@ class BookService {
         await booksCollection
             .doc(documentId)
             .update({'is_favorite': isFavorite});
+
+        print('🔴 success ');
       } else {
         // Handle the case where no matching documents were found
         print('No document found with bookId $bookId.');

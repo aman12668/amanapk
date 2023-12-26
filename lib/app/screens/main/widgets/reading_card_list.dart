@@ -27,9 +27,9 @@ class ReadingListCard extends ConsumerStatefulWidget {
 
 class _ReadingListCardState extends ConsumerState<ReadingListCard> {
   void favToggle() {
-    setState(() {
-      widget.book.isFavorite = !widget.book.isFavorite;
-    });
+    // setState(() {
+    //   widget.book.isFavorite = !widget.book.isFavorite;
+    // });
     ref.read(booksProvider.notifier).toggleFavorite(widget.book);
   }
 
@@ -66,7 +66,7 @@ class _ReadingListCardState extends ConsumerState<ReadingListCard> {
               width: 150,
               height: 150,
               fit: BoxFit.cover,
-              errorWidget: (context, url, error) => FallBackImage(),
+              errorWidget: (context, url, error) => const FallBackImage(),
             ),
           ),
           Positioned(
