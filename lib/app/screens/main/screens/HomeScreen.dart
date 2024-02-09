@@ -125,7 +125,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: size.height * .02),
+              SizedBox(height: size.height * .01),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: RichText(
@@ -141,7 +141,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ],
                   ),
                 ),
-              ),
+              ), 
               const SizedBox(height: 30),
               const ImageSliderFirebase(),
               // StickyHeader( controller: _categoriesScrollcontroller,child: ),
@@ -152,20 +152,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    RichText(
+                   /* RichText(
                       text: TextSpan(
                         style: Theme.of(context).textTheme.headline4,
                         children: const [
-                          TextSpan(text: "Best of the "),
+                           TextSpan(text: "Best of the "),
                           TextSpan(
                             text: "day",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                        ],
-                      ),
-                    ),
+                        ], 
+                      ), 
+                    ), */
                     bestOfTheDayCard(size, context),
-                    RichText(
+                   /* RichText(
                       text: TextSpan(
                         style: Theme.of(context).textTheme.headline4,
                         children: const [
@@ -176,7 +176,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         ],
                       ),
-                    ),
+                    ), */
                     const SizedBox(height: 20),
                     Container(
                       height: 80,
@@ -211,18 +211,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            "Crushing & Influence",
+                                            "Testing Mode",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
-                                            "Unknown",
+                                            "We Are Coming Very Soon....",
                                             style: TextStyle(
                                               color: kLightBlackColor,
                                             ),
                                           ),
-                                          Align(
+                                          /*Align(
                                             alignment: Alignment.bottomRight,
                                             child: Text(
                                               "Chapter 7 of 10",
@@ -231,18 +231,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                                 color: kLightBlackColor,
                                               ),
                                             ),
-                                          ),
+                                          ), */
                                           SizedBox(height: 5),
                                         ],
                                       ),
                                     ),
                                     Image.asset(
-                                      "assets/images/book-1.png",
+                                      "assets/images/facebook_cover.jpg",
                                       width: 55,
                                     )
                                   ],
                                 ),
-                              ),
+                              ), 
                             ),
                             Container(
                               height: 7,
@@ -568,7 +568,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
+                 /* Container(
                     margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                     child: const Text(
                       "New York Time Best For 11th March 2020",
@@ -577,7 +577,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         color: kLightBlackColor,
                       ),
                     ),
-                  ),
+                  ),  */
                   Text(
                     "How To Win \nFriends &  Influence",
                     style: Theme.of(context).textTheme.headline6,
@@ -594,7 +594,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           padding: EdgeInsets.only(right: 10.0),
                           child: BookRating(score: 4.9),
                         ),
-                        Expanded(
+                       /* Expanded(
                           child: Text(
                             "When the earth was flat and everyone wanted to win the game of the best and people….",
                             maxLines: 3,
@@ -604,23 +604,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               color: kLightBlackColor,
                             ),
                           ),
-                        ),
+                        ), */
                       ],
                     ),
                   ),
                 ],
-              ),
-            ),
-          ),
-          Positioned(
+              ), 
+            ), 
+          ), 
+          /*Positioned(
             right: 0,
             top: 0,
             child: Image.asset(
               "assets/images/book-3.png",
               width: size.width * .37,
             ),
-          ),
-          Positioned(
+          ), */
+          /*Positioned(
             bottom: 0,
             right: 0,
             child: SizedBox(
@@ -632,7 +632,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 press: () {},
               ),
             ),
-          ),
+          ), */
         ],
       ),
     );

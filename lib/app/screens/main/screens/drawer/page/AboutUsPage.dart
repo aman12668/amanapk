@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: AboutUs(),
   ));
 }
 
 class AboutUs extends StatelessWidget {
+  const AboutUs({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -83,7 +83,7 @@ class DetailsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(
+            /*Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,7 +175,7 @@ class DetailsScreen extends StatelessWidget {
                   )
                 ],
               ),
-            ),
+            ),*/                                   
             const SizedBox(
               height: 40,
             ),

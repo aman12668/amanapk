@@ -173,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Dont have an account? Join us",
+                            "Don't have an account? Join us",
                             style: GoogleFonts.electrolize(
                                 fontWeight: FontWeight.w600,
                                 color: black,
@@ -263,7 +263,12 @@ class _LoginFormState extends State<LoginForm> {
       } else if (e.code == 'wrong-password') {
         errorMessage('PASSWORD DOESNT MATCHED');
         if (mounted) Navigator.pop(context);
-      } else {
+
+      } else if (e.code == 'Space-left') {
+        errorMessage('Please don`t Leave any empty Space');
+      }
+      
+      else {
         errorMessage("SOMETHING WENT WRONG");
       }
     }

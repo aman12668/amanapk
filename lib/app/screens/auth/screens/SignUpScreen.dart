@@ -277,8 +277,10 @@ class _SignUpFormState extends State<SignUpForm> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         errorMessage('Password is too weak');
-      } else if (e.code == 'email-already-in-use') {
+      } else if (e.code == 'Email-already-in-use') {
         errorMessage('THIS ACCOUNT ALREADY EXISTS');
+      } else if (e.code == 'Space-left') {
+        errorMessage('Please don`t Leave empty Space');
       }
     } catch (e) {
       print(e);
